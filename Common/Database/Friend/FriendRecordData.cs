@@ -87,7 +87,7 @@ public class FriendDevelopmentInfoPb
             case DevelopmentType.DevelopmentChallengePeak:
                 proto.ChallengePeakDevelopmentInfo = new FriendChallengePeakDevelopmentInfo
                 {
-                    PeakLevelId = Params.GetValueOrDefault("PeakLevelId", 0u)
+                    PeakId = Params.GetValueOrDefault("PeakLevelId", 0u) //PeakLevelId
                 };
                 break;
         }
@@ -103,42 +103,42 @@ public class ChallengeGroupStatisticsPb
     public Dictionary<uint, StoryGroupStatisticsPb>? StoryGroupStatistics { get; set; }
     public Dictionary<uint, BossGroupStatisticsPb>? BossGroupStatistics { get; set; }
 
-    public ChallengeGroupStatistics ToProto()
-    {
-        var proto = new ChallengeGroupStatistics
-        {
-            GroupId = GroupId
-        };
+    //public ChallengeGroupStatistics ToProto()
+    //{
+    //    var proto = new ChallengeGroupStatistics
+    //    {
+    //        GroupId = GroupId
+    //    };
 
-        if (MemoryGroupStatistics != null)
-        {
-            foreach (var memoryGroupStatistic in MemoryGroupStatistics.Values)
-                proto.GroupTotalStars += memoryGroupStatistic.Stars;
+    //    if (MemoryGroupStatistics != null)
+    //    {
+    //        foreach (var memoryGroupStatistic in MemoryGroupStatistics.Values)
+    //            proto.GroupTotalStars += memoryGroupStatistic.Stars;
 
-            var maxFloor = MemoryGroupStatistics.Values.MaxBy(x => x.Level);
-            if (maxFloor != null) proto.MemoryGroup = maxFloor.ToProto();
-        }
+    //        var maxFloor = MemoryGroupStatistics.Values.MaxBy(x => x.Level);
+    //        if (maxFloor != null) proto.MemoryGroup = maxFloor.ToProto();
+    //    }
 
-        if (StoryGroupStatistics != null)
-        {
-            foreach (var storyGroupStatistic in StoryGroupStatistics.Values)
-                proto.GroupTotalStars += storyGroupStatistic.Stars;
+    //    if (StoryGroupStatistics != null)
+    //    {
+    //        foreach (var storyGroupStatistic in StoryGroupStatistics.Values)
+    //            proto.GroupTotalStars += storyGroupStatistic.Stars;
 
-            var maxFloor = StoryGroupStatistics.Values.MaxBy(x => x.Level);
-            if (maxFloor != null) proto.StoryGroup = maxFloor.ToProto();
-        }
+    //        var maxFloor = StoryGroupStatistics.Values.MaxBy(x => x.Level);
+    //        if (maxFloor != null) proto.StoryGroup = maxFloor.ToProto();
+    //    }
 
-        if (BossGroupStatistics != null)
-        {
-            foreach (var bossGroupStatistic in BossGroupStatistics.Values)
-                proto.GroupTotalStars += bossGroupStatistic.Stars;
+    //    if (BossGroupStatistics != null)
+    //    {
+    //        foreach (var bossGroupStatistic in BossGroupStatistics.Values)
+    //            proto.GroupTotalStars += bossGroupStatistic.Stars;
 
-            var maxFloor = BossGroupStatistics.Values.MaxBy(x => x.Level);
-            if (maxFloor != null) proto.BossGroup = maxFloor.ToProto();
-        }
+    //        var maxFloor = BossGroupStatistics.Values.MaxBy(x => x.Level);
+    //        if (maxFloor != null) proto.BossGroup = maxFloor.ToProto();
+    //    }
 
-        return proto;
-    }
+    //    return proto;
+    //}
 }
 
 public class MemoryGroupStatisticsPb
@@ -149,23 +149,23 @@ public class MemoryGroupStatisticsPb
     public uint Stars { get; set; }
     public List<List<ChallengeAvatarInfoPb>> Lineups { get; set; } = [];
 
-    public MemoryGroupStatistics ToProto()
-    {
-        return new MemoryGroupStatistics
-        {
-            RecordId = RecordId,
-            SttInfo = new MemoryStatisticsInfo
-            {
-                CurLevelStars = Stars,
-                Level = Level,
-                RoundCount = RoundCount,
-                LineupList =
-                {
-                    Lineups.SelectMany(x => x.Select(avatar => avatar.Id))
-                }
-            }
-        };
-    }
+    //public MemoryGroupStatistics ToProto()
+    //{
+    //    return new MemoryGroupStatistics
+    //    {
+    //        RecordId = RecordId,
+    //        SttInfo = new MemoryStatisticsInfo
+    //        {
+    //            CurLevelStars = Stars,
+    //            Level = Level,
+    //            RoundCount = RoundCount,
+    //            LineupList =
+    //            {
+    //                Lineups.SelectMany(x => x.Select(avatar => avatar.Id))
+    //            }
+    //        }
+    //    };
+    //}
 }
 
 public class StoryGroupStatisticsPb
@@ -178,17 +178,17 @@ public class StoryGroupStatisticsPb
     public uint Stars { get; set; }
     public List<List<ChallengeAvatarInfoPb>> Lineups { get; set; } = [];
 
-    public StoryGroupStatistics ToProto()
-    {
-        return new StoryGroupStatistics
-        {
-            RecordId = RecordId,
-            SttInfo = new StoryStatisticsInfo
-            {
-                Stars = Stars
-            }
-        };
-    }
+    //public StoryGroupStatistics ToProto()
+    //{
+    //    return new StoryGroupStatistics
+    //    {
+    //        RecordId = RecordId,
+    //        SttInfo = new StoryStatisticsInfo
+    //        {
+    //            Stars = Stars
+    //        }
+    //    };
+    //}
 }
 
 public class BossGroupStatisticsPb
@@ -201,17 +201,17 @@ public class BossGroupStatisticsPb
     public uint Stars { get; set; }
     public List<List<ChallengeAvatarInfoPb>> Lineups { get; set; } = [];
 
-    public BossGroupStatistics ToProto()
-    {
-        return new BossGroupStatistics
-        {
-            RecordId = RecordId,
-            SttInfo = new BossStatisticsInfo
-            {
-                Stars = Stars
-            }
-        };
-    }
+    //public BossGroupStatistics ToProto()
+    //{
+    //    return new BossGroupStatistics
+    //    {
+    //        RecordId = RecordId,
+    //        SttInfo = new BossStatisticsInfo
+    //        {
+    //            Stars = Stars
+    //        }
+    //    };
+    //}
 }
 
 public class ChallengeAvatarInfoPb

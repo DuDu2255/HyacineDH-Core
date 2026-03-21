@@ -90,15 +90,15 @@ public class SwitchHandInfo
         };
     }
 
-    public MFJODIAILFL ToSwitchHandProto()
+    public GODHDEIPDJL ToSwitchHandProto()
     {
-        return new MFJODIAILFL
+        return new GODHDEIPDJL
         {
             ConfigId = (uint)ConfigId,
-            JMMIHOEDFCG = CoinNum < 0 ? 0u : (uint)CoinNum,
-            CMMNJCIDABE = State,
-            PMIEJBIDLIL = ByteString.CopyFrom(ByteValue),
-            ALMMDIOABGJ = new MotionInfo
+            JLMJFEDNBMF = CoinNum < 0 ? 0u : (uint)CoinNum, //4.1.0 JMMIHOEDFCG
+            AMBLLFLFKHC = State,
+            MHINKADJCCG = ByteString.CopyFrom(ByteValue),
+            MotionInfo = new MotionInfo
             {
                 Pos = Pos.ToProto(),
                 Rot = Rot.ToProto()

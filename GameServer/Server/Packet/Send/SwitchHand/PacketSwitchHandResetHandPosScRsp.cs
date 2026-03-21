@@ -10,7 +10,7 @@ public class PacketSwitchHandResetHandPosScRsp : BasePacket
     {
         var proto = new GetSwitchHandResetHandPosScRsp
         {
-            BDCBCCOOLHE = info.ToSwitchHandProto()
+            LFNIPECKNDH = info.ToSwitchHandProto()
         };
 
         SetData(proto);

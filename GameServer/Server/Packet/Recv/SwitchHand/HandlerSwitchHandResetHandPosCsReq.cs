@@ -22,8 +22,8 @@ public class HandlerSwitchHandResetHandPosCsReq : Handler
         }
         else
         {
-            info.Item2.Pos = req.ALMMDIOABGJ?.Pos.ToPosition() ?? info.Item2.Pos;
-            info.Item2.Rot = req.ALMMDIOABGJ?.Rot.ToPosition() ?? info.Item2.Rot;
+            info.Item2.Pos = req.MotionInfo?.Pos.ToPosition() ?? info.Item2.Pos;
+            info.Item2.Rot = req.MotionInfo?.Rot.ToPosition() ?? info.Item2.Rot;
 
             await connection.SendPacket(new PacketSwitchHandResetHandPosScRsp(info.Item2));
         }

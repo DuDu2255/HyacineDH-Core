@@ -9,7 +9,7 @@ public class PacketMarbleUpdateShownSealScRsp : BasePacket
     {
         var proto = new MarbleUpdateShownSealScRsp
         {
-            FJJLKALJIKL = { sealList }
+            LAINAEAMHJB = { sealList }
         };
 
         SetData(proto);

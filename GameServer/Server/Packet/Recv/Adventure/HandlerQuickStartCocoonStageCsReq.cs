@@ -10,7 +10,7 @@ public class HandlerQuickStartCocoonStageCsReq : Handler
     public override async Task OnHandle(Connection connection, byte[] header, byte[] data)
     {
         var req = QuickStartCocoonStageCsReq.Parser.ParseFrom(data);
-        var wave = (int)(req.Wave > 0 ? req.Wave : req.CKIHMAFPNOA);
+        var wave = (int)(req.Wave > 0 ? req.Wave : req.Count);
         if (wave <= 0) wave = 1;
 
         var battle =

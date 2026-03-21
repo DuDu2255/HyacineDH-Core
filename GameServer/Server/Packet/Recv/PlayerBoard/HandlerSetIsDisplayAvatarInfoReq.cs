@@ -9,9 +9,10 @@ public class HandlerSetIsDisplayAvatarInfoReq : Handler
 {
     public override async Task OnHandle(Connection connection, byte[] header, byte[] data)
     {
-        var req = SetIsDisplayAvatarInfoReq.Parser.ParseFrom(data);
+        // 这是 SetIsDisplayAvatarInfoReq/Rsp !!
+        var req = SetIsOHOMDMEJLFKReq.Parser.ParseFrom(data);
 
-        var rsp = new SetIsDisplayAvatarInfoScRsp
+        var rsp = new SetIsOHOMDMEJLFKScRsp
         {
             Retcode = 0,
             IsDisplay = req.IsDisplay

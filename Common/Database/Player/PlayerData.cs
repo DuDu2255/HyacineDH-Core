@@ -159,11 +159,11 @@ public class PlayerData : BaseDatabaseDataHelper
             Signature = Signature,
             IsBanned = false,
             HeadIcon = (uint)HeadIcon,
-            AODAGCOPCOK = (uint)PersonalCard,
+            PersonalCard = (uint)PersonalCard, //OGJGMNBPPLE??
             Platform = PlatformType.Pc,
             Uid = (uint)Uid,
             WorldLevel = (uint)WorldLevel,
-            EEEDAOPBPJI = true,
+            NHIDOAAMLNF = true,
             RecordInfo = new PlayerRecordInfo(),
             PrivacySettings = PrivacySettings.ToProto(),
             HeadFrameInfo = HeadFrame.ToProto()
@@ -237,11 +237,12 @@ public class PrivacySettingsPb
     {
         return new PrivacySettings
         {
-            PEKHBGBBLLK = DisplayChallengeLineup,
-            MNLGJHEMADN = DisplayActiveState,
-            LJDJALDEGKE = DisplayRecentlyState,
-            IIDDIHBKAGE = DisplayBattleRecord,
-            AJGMIHLLEDI = DisplayCollection
+            // 孩子，我也分不清
+            LPEPIDNJDEM = DisplayChallengeLineup,
+            CHCNEDNCIDJ = DisplayActiveState,
+            CPOGDKALGOM = DisplayRecentlyState,
+            FIJNAPNICJF = DisplayBattleRecord,
+            NHLKFBOBDOM = DisplayCollection
         };
     }
 
@@ -249,13 +250,13 @@ public class PrivacySettingsPb
     {
         return new PlayerSettingInfo
         {
-            BNIJBEAJPDN = DisplayChallengeLineup,
-            JLJFENCPGHO = DisplayActiveState,
-            LJDJALDEGKE = DisplayRecentlyState,
-            OFPJKPJFPFP = DisplayBattleRecord,
-            IIDDIHBKAGE = DisplayCollection,
-            MNLGJHEMADN = DisplayBattleRecord,
-            ENDHKCFENHD = new HMELNCNOPHM()
+            //BNIJBEAJPDN = DisplayChallengeLineup,
+            //JLJFENCPGHO = DisplayActiveState,
+            //LJDJALDEGKE = DisplayRecentlyState,
+            //OFPJKPJFPFP = DisplayBattleRecord,
+            //IIDDIHBKAGE = DisplayCollection,
+            //MNLGJHEMADN = DisplayBattleRecord,
+            EHKLNPCMMHE = new OEEEAEJBENB()
         };
     }
 }

@@ -17,7 +17,7 @@ public static class ChatMessageBuilder
         var chat = new ChatMessageData
         {
             CreateTime = createTime ?? (ulong)Extensions.GetUnixSec(),
-            AEELKNKIICI = new JDPGJOADLLE
+            SourceData = new SourceData
             {
                 Uid = senderUid
             }
@@ -39,7 +39,7 @@ public static class ChatMessageBuilder
         var chat = new ChatMessageData
         {
             CreateTime = createTime ?? (ulong)Extensions.GetUnixSec(),
-            AEELKNKIICI = new JDPGJOADLLE
+            SourceData = new SourceData
             {
                 Uid = senderUid
             }

@@ -4,12 +4,12 @@ using HyacineCore.Server.Proto;
 
 namespace HyacineCore.Server.GameServer.Server.Packet.Recv.ServerPrefs;
 
-[Opcode(CmdIds.UpdateServerPrefsCsReq)]
+[Opcode(CmdIds.UpdateServerPrefsDataCsReq)]
 public class HandlerUpdateServerPrefsDataCsReq : Handler
 {
     public override async Task OnHandle(Connection connection, byte[] header, byte[] data)
     {
-        var req = UpdateServerPrefsCsReq.Parser.ParseFrom(data);
+        var req = UpdateServerPrefsDataCsReq.Parser.ParseFrom(data);
 
         connection.Player?.ServerPrefsData?.SetData((int)req.ServerPrefs.ServerPrefsId,
             req.ServerPrefs.Data.ToBase64());

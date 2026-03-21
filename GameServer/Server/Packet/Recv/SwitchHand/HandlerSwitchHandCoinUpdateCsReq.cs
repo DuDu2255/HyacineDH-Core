@@ -20,8 +20,8 @@ public class HandlerSwitchHandCoinUpdateCsReq : Handler
         }
         else
         {
-            info.Item2.CoinNum = (int)req.JMMIHOEDFCG;
-            await connection.SendPacket(new PacketSwitchHandCoinUpdateScRsp(req.JMMIHOEDFCG));
+            info.Item2.CoinNum = (int)req.JLMJFEDNBMF;
+            await connection.SendPacket(new PacketSwitchHandCoinUpdateScRsp(req.JLMJFEDNBMF));
         }
     }
 }

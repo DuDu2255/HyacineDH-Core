@@ -8,31 +8,31 @@ public class PacketSwitchHandDataScRsp : BasePacket
 {
     public PacketSwitchHandDataScRsp(SwitchHandInfo info) : base(CmdIds.SwitchHandDataScRsp)
     {
-        var proto = new SwitchHandDataScRsp
-        {
-            BDCBCCOOLHE = { info.ToSwitchHandProto() }
-        };
+        //var proto = new SwitchHandDataScRsp
+        //{
+        //    BDCBCCOOLHE = { info.ToSwitchHandProto() }
+        //};
 
-        SetData(proto);
+        //SetData(proto);
     }
 
     public PacketSwitchHandDataScRsp(List<SwitchHandInfo> infos) : base(CmdIds.SwitchHandDataScRsp)
     {
-        var proto = new SwitchHandDataScRsp
-        {
-            BDCBCCOOLHE = { infos.Select(x => x.ToSwitchHandProto()) }
-        };
+        //var proto = new SwitchHandDataScRsp
+        //{
+        //    BDCBCCOOLHE = { infos.Select(x => x.ToSwitchHandProto()) }
+        //};
 
-        SetData(proto);
+        //SetData(proto);
     }
 
     public PacketSwitchHandDataScRsp(Retcode code) : base(CmdIds.SwitchHandDataScRsp)
     {
-        var proto = new SwitchHandDataScRsp
-        {
-            Retcode = (uint)code
-        };
+        //var proto = new SwitchHandDataScRsp
+        //{
+        //    Retcode = (uint)code
+        //};
 
-        SetData(proto);
+        //SetData(proto);
     }
 }

@@ -34,7 +34,7 @@ public class LoginActivityData
 
             if (TakenRewards.TryGetValue(kv.Key, out var takenList))
             {
-                protoData.OMCIOCFBIFA.AddRange(takenList);
+                protoData.EKNCPHDGBMN.AddRange(takenList);
             }
 
             protoList.Add(protoData);

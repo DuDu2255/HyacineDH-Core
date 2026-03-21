@@ -23,9 +23,9 @@ public class PacketUpdateGroupPropertyScRsp : BasePacket
             DimensionId = req.DimensionId,
             FloorId = req.FloorId,
             GroupId = (uint)data.GroupId,
-            JDJOCEHPOKF = data.NewValue,
-            EAGKBEMCFAB = data.OldValue,
-            NOCBONMOOGC = data.PropertyName
+            ELKOCIJNABK = data.NewValue,
+            FNAODNGJAMM = data.OldValue,
+            Name = data.PropertyName
         };
 
         SetData(proto);

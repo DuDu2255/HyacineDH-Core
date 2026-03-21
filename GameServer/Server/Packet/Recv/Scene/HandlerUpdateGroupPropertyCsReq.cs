@@ -26,7 +26,7 @@ public class HandlerUpdateGroupPropertyCsReq : Handler
         }
 
         // update group property
-        var res = await scene.UpdateGroupProperty((int)req.GroupId, req.NOCBONMOOGC, req.BFJLBKKJBLD);
+        var res = await scene.UpdateGroupProperty((int)req.GroupId, req.Name, req.AOBABOGHFKJ);
         await connection.SendPacket(new PacketUpdateGroupPropertyScRsp(res, req));
     }
 }

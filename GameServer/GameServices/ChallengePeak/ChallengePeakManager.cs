@@ -430,11 +430,11 @@ public class ChallengePeakManager(PlayerInstance player) : BasePlayerManager(pla
             BestCycleCount = data.RoundCnt,
             BuffId = data.BuffId,
             HasPassed = data.PeakStar > 0 || data.FinishedTargetList.Count > 0,
-            KBFCPEKHEMN = data.PeakStar
+            HEILKBJCAGB = data.PeakStar
         };
 
         proto.PeakAvatarIdList.AddRange(data.BaseAvatarList);
-        proto.DFDHNOCJNBG.AddRange(data.FinishedTargetList);
+        proto.OHOMDMEJLFK.AddRange(data.FinishedTargetList);
 
         return proto;
     }

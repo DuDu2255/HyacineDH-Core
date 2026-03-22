@@ -32,6 +32,7 @@ public class PacketGetAvatarDataScRsp : BasePacket
         }
 
         proto.BasicTypeIdList.AddRange(basicTypeIds);
+        proto.CurAvatarPath.Add(GrowthTartgetFuncType.Iipiakjfgnh);
 
         SetData(proto);
     }

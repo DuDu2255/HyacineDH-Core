@@ -2,8 +2,6 @@
 using HyacineCore.Server.Util;
 using HyacineCore.Server.WebServer.Objects;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Cryptography;
-using static HyacineCore.Server.WebServer.Objects.NewLoginResJson;
 
 namespace HyacineCore.Server.WebServer.Handler;
 

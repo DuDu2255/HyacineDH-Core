@@ -4,7 +4,7 @@ using HyacineCore.Server.Proto;
 
 namespace HyacineCore.Server.GameServer.Server.Packet.Recv.Friend;
 
-[Opcode(CmdIds.SetFriendMarkCsReq)]
+//[Opcode(CmdIds.SetFriendMarkCsReq)]
 public class HandlerSetFriendMarkCsReq : Handler
 {
     public override async Task OnHandle(Connection connection, byte[] header, byte[] data)

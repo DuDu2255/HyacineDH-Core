@@ -3,9 +3,9 @@ using HyacineCore.Server.Proto;
 
 namespace HyacineCore.Server.GameServer.Server.Packet.Send.Player;
 
-public class PacketPlayerKickOutScNotify : BasePacket
+public class PacketPlayerSqueezedScNotify : BasePacket
 {
-    public PacketPlayerKickOutScNotify() : base(CmdIds.PlayerKickOutScNotify)
+    public PacketPlayerSqueezedScNotify() : base(CmdIds.FightKickOutScNotify)
     {
         var proto = new PlayerKickOutScNotify
         {
@@ -14,7 +14,7 @@ public class PacketPlayerKickOutScNotify : BasePacket
         SetData(proto);
     }
 
-    public PacketPlayerKickOutScNotify(KickType type, BlackInfo? info = null) : base(CmdIds.PlayerKickOutScNotify)
+    public PacketPlayerSqueezedScNotify(KickType type, BlackInfo? info = null) : base(CmdIds.PlayerSqueezedScNotify)
     {
         var proto = new PlayerKickOutScNotify
         {
@@ -23,6 +23,7 @@ public class PacketPlayerKickOutScNotify : BasePacket
 
         if (info != null) proto.BlackInfo = info;
 
+        var proto = new FightKickOutScNotify();
         SetData(proto);
     }
 }

@@ -3,7 +3,7 @@ using HyacineCore.Server.Kcp;
 
 namespace HyacineCore.Server.GameServer.Server.Packet.Recv.Friend;
 
-[Opcode(CmdIds.GetFriendRecommendListInfoCsReq)]
+//[Opcode(CmdIds.GetFriendRecommendListInfoCsReq)]
 public class HandlerGetFriendRecommendListInfoCsReq : Handler
 {
     public override async Task OnHandle(Connection connection, byte[] header, byte[] data)

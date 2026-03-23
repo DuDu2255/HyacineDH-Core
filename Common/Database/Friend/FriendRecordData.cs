@@ -48,46 +48,46 @@ public class FriendDevelopmentInfoPb
 
         switch (DevelopmentType)
         {
-            case DevelopmentType.DevelopmentNone: // DevelopmentNone
-            case DevelopmentType.DevelopmentActivityStart: // DevelopmentActivityStart
-            case DevelopmentType.DevelopmentActivityEnd: // DevelopmentActivityEnd
-            case DevelopmentType.DevelopmentRogueMagic: // DevelopmentRogueMagic
+            case DevelopmentType.DevelopmentNone:
+            case DevelopmentType.DevelopmentActivityStart:
+            case DevelopmentType.DevelopmentActivityEnd:
+            case DevelopmentType.DevelopmentRogueMagic:
                 break;
-            case DevelopmentType.DevelopmentRogueCosmos: // DevelopmentRogueCosmos
-            case DevelopmentType.DevelopmentRogueChessNous: // DevelopmentRogueChessNous
-            case DevelopmentType.DevelopmentRogueChess: // DevelopmentRogueChess
+            case DevelopmentType.DevelopmentRogueCosmos:
+            case DevelopmentType.DevelopmentRogueChessNous:
+            case DevelopmentType.DevelopmentRogueChess:
                 proto.RogueDevelopmentInfo = new FriendRogueDevelopmentInfo
                 {
                     AreaId = Params.GetValueOrDefault("AreaId", 0u)
                 };
                 break;
-            case DevelopmentType.DevelopmentMemoryChallenge: // DevelopmentMemoryChallenge
-            case DevelopmentType.DevelopmentStoryChallenge: // DevelopmentStoryChallenge
-            case DevelopmentType.DevelopmentBossChallenge: // DevelopmentBossChallenge
+            case DevelopmentType.DevelopmentMemoryChallenge:
+            case DevelopmentType.DevelopmentStoryChallenge:
+            case DevelopmentType.DevelopmentBossChallenge:
                 proto.ChallengeDevelopmentInfo = new FriendChallengeDevelopmentInfo
                 {
                     ChallengeId = Params.GetValueOrDefault("ChallengeId", 0u)
                 };
                 break;
-            case DevelopmentType.DevelopmentUnlockAvatar: // DevelopmentUnlockAvatar
+            case DevelopmentType.DevelopmentUnlockAvatar:
                 proto.AvatarId = Params.GetValueOrDefault("AvatarId", 0u);
                 break;
-            case DevelopmentType.DevelopmentUnlockEquipment: // DevelopmentUnlockEquipment
+            case DevelopmentType.DevelopmentUnlockEquipment:
                 proto.EquipmentTid = Params.GetValueOrDefault("EquipmentTid", 0u);
                 break;
-            case DevelopmentType.DevelopmentRogueTourn: // DevelopmentRogueTourn
-            case DevelopmentType.DevelopmentRogueTournWeek: // DevelopmentRogueTournWeek
-            case DevelopmentType.DevelopmentRogueTournDivision: // DevelopmentRogueTournDivision
+            case DevelopmentType.DevelopmentRogueTourn:
+            case DevelopmentType.DevelopmentRogueTournWeek:
+            case DevelopmentType.DevelopmentRogueTournDivision:
                 proto.RogueTournDevelopmentInfo = new FriendRogueTournDevelopmentInfo
                 {
-                    ChallengeId = Params.GetValueOrDefault("ChallengeId", 0u)
+                    AreaId = Params.GetValueOrDefault("AreaId", 0u),
+                    FinishTournDifficulty = Params.GetValueOrDefault("FinishTournDifficulty", 0u)
                 };
                 break;
-            case DevelopmentType.DevelopmentChallengePeak: // DevelopmentChallengePeak
+            case DevelopmentType.DevelopmentChallengePeak:
                 proto.ChallengePeakDevelopmentInfo = new FriendChallengePeakDevelopmentInfo
                 {
-                    PeakLevelId = Params.GetValueOrDefault("PeakLevelId", 0u),
-                    AreaId = Params.GetValueOrDefault("AreaId", 0u)
+                    PeakId = Params.GetValueOrDefault("PeakLevelId", 0u) //PeakLevelId
                 };
                 break;
         }
@@ -103,21 +103,42 @@ public class ChallengeGroupStatisticsPb
     public Dictionary<uint, StoryGroupStatisticsPb>? StoryGroupStatistics { get; set; }
     public Dictionary<uint, BossGroupStatisticsPb>? BossGroupStatistics { get; set; }
 
-    public GetChallengeGroupStatisticsScRsp ToProto()
-    {
-        var proto = new GetChallengeGroupStatisticsScRsp { GroupId = GroupId };
+    //public ChallengeGroupStatistics ToProto()
+    //{
+    //    var proto = new ChallengeGroupStatistics
+    //    {
+    //        GroupId = GroupId
+    //    };
 
-        var maxBoss = BossGroupStatistics?.Values.MaxBy(x => x.Level);
-        if (maxBoss != null) proto.ChallengeBoss = maxBoss.ToProto();
+    //    if (MemoryGroupStatistics != null)
+    //    {
+    //        foreach (var memoryGroupStatistic in MemoryGroupStatistics.Values)
+    //            proto.GroupTotalStars += memoryGroupStatistic.Stars;
 
-        var maxStory = StoryGroupStatistics?.Values.MaxBy(x => x.Level);
-        if (maxStory != null) proto.ChallengeStory = maxStory.ToProto();
+    //        var maxFloor = MemoryGroupStatistics.Values.MaxBy(x => x.Level);
+    //        if (maxFloor != null) proto.MemoryGroup = maxFloor.ToProto();
+    //    }
 
-        var maxMemory = MemoryGroupStatistics?.Values.MaxBy(x => x.Level);
-        if (maxMemory != null) proto.ChallengeDefault = maxMemory.ToProto();
+    //    if (StoryGroupStatistics != null)
+    //    {
+    //        foreach (var storyGroupStatistic in StoryGroupStatistics.Values)
+    //            proto.GroupTotalStars += storyGroupStatistic.Stars;
 
-        return proto;
-    }
+    //        var maxFloor = StoryGroupStatistics.Values.MaxBy(x => x.Level);
+    //        if (maxFloor != null) proto.StoryGroup = maxFloor.ToProto();
+    //    }
+
+    //    if (BossGroupStatistics != null)
+    //    {
+    //        foreach (var bossGroupStatistic in BossGroupStatistics.Values)
+    //            proto.GroupTotalStars += bossGroupStatistic.Stars;
+
+    //        var maxFloor = BossGroupStatistics.Values.MaxBy(x => x.Level);
+    //        if (maxFloor != null) proto.BossGroup = maxFloor.ToProto();
+    //    }
+
+    //    return proto;
+    //}
 }
 
 public class MemoryGroupStatisticsPb
@@ -128,26 +149,23 @@ public class MemoryGroupStatisticsPb
     public uint Stars { get; set; }
     public List<List<ChallengeAvatarInfoPb>> Lineups { get; set; } = [];
 
-    public ChallengeStatistics ToProto()
-    {
-        return new ChallengeStatistics
-        {
-            RecordId = RecordId,
-            StageTertinggi = new ChallengeStageTertinggi
-            {
-                LDEKMAADNKK = Stars,
-                Level = Level,
-                RoundCount = RoundCount,
-                LineupList =
-                {
-                    Lineups.Select(x => new ChallengeLineupList
-                    {
-                        AvatarList = { x.Select(avatar => avatar.ToProto()) }
-                    })
-                }
-            }
-        };
-    }
+    //public MemoryGroupStatistics ToProto()
+    //{
+    //    return new MemoryGroupStatistics
+    //    {
+    //        RecordId = RecordId,
+    //        SttInfo = new MemoryStatisticsInfo
+    //        {
+    //            CurLevelStars = Stars,
+    //            Level = Level,
+    //            RoundCount = RoundCount,
+    //            LineupList =
+    //            {
+    //                Lineups.SelectMany(x => x.Select(avatar => avatar.Id))
+    //            }
+    //        }
+    //    };
+    //}
 }
 
 public class StoryGroupStatisticsPb
@@ -160,28 +178,17 @@ public class StoryGroupStatisticsPb
     public uint Stars { get; set; }
     public List<List<ChallengeAvatarInfoPb>> Lineups { get; set; } = [];
 
-    public ChallengeStoryStatistics ToProto()
-    {
-        return new ChallengeStoryStatistics
-        {
-            RecordId = RecordId,
-            StageTertinggi = new ChallengeStoryStageTertinggi
-            {
-                LDEKMAADNKK = Stars,
-                Level = Level,
-                LineupList =
-                {
-                    Lineups.Select(x => new ChallengeLineupList
-                    {
-                        AvatarList = { x.Select(avatar => avatar.ToProto()) }
-                    })
-                },
-                BuffOne = BuffOne,
-                BuffTwo = BuffTwo,
-                ScoreId = Score
-            }
-        };
-    }
+    //public StoryGroupStatistics ToProto()
+    //{
+    //    return new StoryGroupStatistics
+    //    {
+    //        RecordId = RecordId,
+    //        SttInfo = new StoryStatisticsInfo
+    //        {
+    //            Stars = Stars
+    //        }
+    //    };
+    //}
 }
 
 public class BossGroupStatisticsPb
@@ -194,28 +201,17 @@ public class BossGroupStatisticsPb
     public uint Stars { get; set; }
     public List<List<ChallengeAvatarInfoPb>> Lineups { get; set; } = [];
 
-    public ChallengeBossStatistics ToProto()
-    {
-        return new ChallengeBossStatistics
-        {
-            RecordId = RecordId,
-            StageTertinggi = new ChallengeBossStageTertinggi
-            {
-                LDEKMAADNKK = Stars,
-                Level = Level,
-                LineupList =
-                {
-                    Lineups.Select(x => new ChallengeLineupList
-                    {
-                        AvatarList = { x.Select(avatar => avatar.ToProto()) }
-                    })
-                },
-                BuffOne = BuffOne,
-                BuffTwo = BuffTwo,
-                ScoreId = Score
-            }
-        };
-    }
+    //public BossGroupStatistics ToProto()
+    //{
+    //    return new BossGroupStatistics
+    //    {
+    //        RecordId = RecordId,
+    //        SttInfo = new BossStatisticsInfo
+    //        {
+    //            Stars = Stars
+    //        }
+    //    };
+    //}
 }
 
 public class ChallengeAvatarInfoPb
@@ -224,7 +220,6 @@ public class ChallengeAvatarInfoPb
     public uint Index { get; set; }
     public uint Id { get; set; }
     public AvatarType AvatarType { get; set; } = AvatarType.AvatarFormalType;
-    public uint Rank { get; set;} // <--- 添加这一行
 
     public ChallengeAvatarInfo ToProto()
     {
@@ -233,8 +228,7 @@ public class ChallengeAvatarInfoPb
             Level = Level,
             AvatarType = AvatarType,
             Id = Id,
-            Index = Index,
-            JNBNNCJKHNG = Rank // 对应星魂
+            Index = Index
         };
     }
 }

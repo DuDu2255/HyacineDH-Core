@@ -11,9 +11,9 @@ public class PacketGetJukeboxDataScRsp : BasePacket
     {
         var proto = new GetJukeboxDataScRsp
         {
-            DIODOPFIENB = new IMENEPMCAKM
+            JILKOPINLDC = new MCPPIEJEBEF
             {
-                DLLEMEJFJJF = new APPBDHOHKGI
+                LEKGBMCOJDB = new NKLAFFLJCHG
                 {
                     Id = (uint)player.Data.CurrentBgm
                 }

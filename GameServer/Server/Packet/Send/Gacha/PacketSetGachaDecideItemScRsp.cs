@@ -9,12 +9,12 @@ public class PacketSetGachaDecideItemScRsp : BasePacket
     {
         var proto = new SetGachaDecideItemScRsp
         {
-            LJFCCLLCIJK = new OMMDLBPNGEK
+            LECPJJAMNPF = new OEIEJHBCOOM
             {
-                KIFIEAKAJCK = gachaId,
-                LODCIPDAADC = { order },
-                FMEFMDOAHCD = 1,
-                GAGHECOHOMC = { 11 }
+                MBOEFLAHLEM = gachaId,
+                DGOMHDMJHEK = { order },
+                PAPOKACIPPJ = 1,
+                IPLLMNPANID = { 11 }
             }
         };
 

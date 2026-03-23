@@ -6,7 +6,7 @@ using Google.Protobuf; // 必须引用
 
 namespace HyacineCore.Server.GameServer.Server.Packet.Recv.Friend;
 
-[Opcode(CmdIds.GetFriendRecommendLineupCsReq)]
+//[Opcode(CmdIds.GetFriendRecommendLineupCsReq)]
 public class HandlerGetFriendRecommendLineupCsReq : Handler
 {
     public override async Task OnHandle(Connection connection, byte[] header, byte[] data)

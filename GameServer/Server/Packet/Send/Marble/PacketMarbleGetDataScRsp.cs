@@ -10,8 +10,8 @@ public class PacketMarbleGetDataScRsp : BasePacket
     {
         var proto = new MarbleGetDataScRsp
         {
-            FCPBIBDODPH = { GameData.MarbleSealData.Keys.Select(x => (uint)x) },
-            BBMCCLMHJGM = { GameData.MarbleMatchInfoData.Keys.Select(x => (uint)x) }
+            CNLBNACFCJE = { GameData.MarbleSealData.Keys.Select(x => (uint)x) },
+            JHDMGFGJMEB = { GameData.MarbleMatchInfoData.Keys.Select(x => (uint)x) }
         };
 
         SetData(proto);

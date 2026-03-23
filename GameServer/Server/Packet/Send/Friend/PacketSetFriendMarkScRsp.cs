@@ -10,7 +10,7 @@ public class PacketSetFriendMarkScRsp : BasePacket
         var proto = new SetFriendMarkScRsp
         {
             Uid = uid,
-            ACMECHLPHIL = isMark
+            KBNKNAHGPHG = isMark
         };
 
         SetData(proto);

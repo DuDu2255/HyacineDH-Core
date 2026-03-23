@@ -82,15 +82,23 @@ public class SwitchHandInfo
     public uint State { get; set; } = 101;
     public byte[] ByteValue { get; set; } = [];
 
-    public HandInfo ToProto()
+    public ScenePropInfo ToProto()
     {
-        return new HandInfo
+        return new ScenePropInfo
+        {
+            PropId = (uint)ConfigId
+        };
+    }
+
+    public GODHDEIPDJL ToSwitchHandProto()
+    {
+        return new GODHDEIPDJL
         {
             ConfigId = (uint)ConfigId,
-            CoinNum = (uint)CoinNum,
-            HandState = State,
-            HandByteValue = ByteString.CopyFrom(ByteValue),
-            HandMotion = new MotionInfo
+            JLMJFEDNBMF = CoinNum < 0 ? 0u : (uint)CoinNum, //4.1.0 JMMIHOEDFCG
+            AMBLLFLFKHC = State,
+            MHINKADJCCG = ByteString.CopyFrom(ByteValue),
+            MotionInfo = new MotionInfo
             {
                 Pos = Pos.ToProto(),
                 Rot = Rot.ToProto()

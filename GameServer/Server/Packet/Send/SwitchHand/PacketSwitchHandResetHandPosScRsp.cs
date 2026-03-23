@@ -6,17 +6,17 @@ namespace HyacineCore.Server.GameServer.Server.Packet.Send.SwitchHand;
 
 public class PacketSwitchHandResetHandPosScRsp : BasePacket
 {
-    public PacketSwitchHandResetHandPosScRsp(SwitchHandInfo info) : base(CmdIds.SwitchHandResetHandPosScRsp)
+    public PacketSwitchHandResetHandPosScRsp(SwitchHandInfo info) : base(CmdIds.GetSwitchHandResetHandPosScRsp)
     {
         var proto = new SwitchHandResetHandPosScRsp
         {
-            TargetHandInfo = info.ToProto()
+            LFNIPECKNDH = info.ToSwitchHandProto()
         };
 
         SetData(proto);
     }
 
-    public PacketSwitchHandResetHandPosScRsp(Retcode ret) : base(CmdIds.SwitchHandResetHandPosScRsp)
+    public PacketSwitchHandResetHandPosScRsp(Retcode ret) : base(CmdIds.GetSwitchHandResetHandPosScRsp)
     {
         var proto = new SwitchHandResetHandPosScRsp
         {

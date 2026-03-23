@@ -158,7 +158,6 @@ public class PlayerData : BaseDatabaseDataHelper
             Level = (uint)Level,
             Signature = Signature,
             IsBanned = false,
-            ShowDisplayAvatar = true,
             HeadIcon = (uint)HeadIcon,
             PersonalCard = (uint)PersonalCard, //OGJGMNBPPLE??
             Platform = PlatformType.Pc,
@@ -221,7 +220,7 @@ public class PlayerHeadFrameInfo
         return new HeadFrameInfo
         {
             HeadFrameExpireTime = HeadFrameExpireTime,
-            HeadFrameId = HeadFrameId
+            HeadFrameItemId = HeadFrameId
         };
     }
 }

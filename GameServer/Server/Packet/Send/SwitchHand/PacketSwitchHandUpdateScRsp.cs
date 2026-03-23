@@ -9,7 +9,7 @@ public class PacketSwitchHandUpdateScRsp : BasePacket
     public PacketSwitchHandUpdateScRsp(SwitchHandInfo info, GODHDEIPDJL? operationInfo, HKLKGJCJJEB? actionInfo = null) : base(
         CmdIds.GetSwitchHandUpdateScRsp)
     {
-        var proto = new SwitchHandUpdateScRsp
+        var proto = new GetSwitchHandUpdateScRsp
         {
             OMHAENBIKCN = operationInfo ?? info.ToSwitchHandProto(),
             CNPILGNBDNB = actionInfo ?? new HKLKGJCJJEB
@@ -25,7 +25,7 @@ public class PacketSwitchHandUpdateScRsp : BasePacket
     public PacketSwitchHandUpdateScRsp(Retcode ret, GODHDEIPDJL? operationInfo, HKLKGJCJJEB? actionInfo = null) : base(
         CmdIds.GetSwitchHandUpdateScRsp)
     {
-        var proto = new SwitchHandUpdateScRsp
+        var proto = new GetSwitchHandUpdateScRsp
         {
             Retcode = (uint)ret,
             OMHAENBIKCN = operationInfo ?? new GODHDEIPDJL(),

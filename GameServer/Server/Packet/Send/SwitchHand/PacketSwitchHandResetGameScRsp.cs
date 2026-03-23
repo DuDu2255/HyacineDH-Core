@@ -8,7 +8,7 @@ public class PacketSwitchHandResetGameScRsp : BasePacket
 {
     public PacketSwitchHandResetGameScRsp(SwitchHandInfo info) : base(CmdIds.GetSwitchHandResetGameScRsp)
     {
-        var proto = new SwitchHandResetGameScRsp
+        var proto = new GetSwitchHandResetGameScRsp
         {
             LFNIPECKNDH = info.ToSwitchHandProto() //TargetHandInfo
         };
@@ -18,7 +18,7 @@ public class PacketSwitchHandResetGameScRsp : BasePacket
 
     public PacketSwitchHandResetGameScRsp(Retcode ret) : base(CmdIds.GetSwitchHandResetGameScRsp)
     {
-        var proto = new SwitchHandResetGameScRsp
+        var proto = new GetSwitchHandResetGameScRsp
         {
             Retcode = (uint)ret
         };

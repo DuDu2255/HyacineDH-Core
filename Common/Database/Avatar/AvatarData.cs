@@ -480,7 +480,7 @@ public class FormalAvatarInfo : BaseAvatarInfo
                 Rank = (uint)pathInfo.Rank,
                 PathEquipmentId = (uint)pathInfo.EquipId,
                 DressedSkinId = (uint)pathInfo.Skin,
-                EnhancedId = (uint)pathInfo.EnhanceId
+                UnkEnhancedId = (uint)pathInfo.EnhanceId
             };
 
             foreach (var skill in pathInfo.GetSkillTree())

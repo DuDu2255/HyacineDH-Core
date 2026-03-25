@@ -48,20 +48,20 @@ public class SwitchHandComponent(PlayerInstance player) : BasePlayerComponent(pl
         return (Retcode.RetSucc, info);
     }
 
-    public (Retcode, SwitchHandInfo?) UpdateHandInfo(HandInfo info)
+    public (Retcode, SwitchHandInfo?) UpdateHandInfo(GODHDEIPDJL info)
     {
         var dbInfo = GetHandInfo((int)info.ConfigId).Item2;
         if (dbInfo == null) return (Retcode.RetInteractConfigNotExist, null);
 
-        if (info.HandMotion != null)
+        if (info.MotionInfo != null)
         {
-            dbInfo.Pos = info.HandMotion.Pos.ToPosition();
-            dbInfo.Rot = info.HandMotion.Rot.ToPosition();
+            dbInfo.Pos = info.MotionInfo.Pos.ToPosition();
+            dbInfo.Rot = info.MotionInfo.Rot.ToPosition();
         }
 
-        dbInfo.State = info.HandState;
-        dbInfo.CoinNum = (int)info.CoinNum;
-        dbInfo.ByteValue = info.HandByteValue.ToByteArray();
+        dbInfo.State = info.AMBLLFLFKHC;  //HandState
+        dbInfo.CoinNum = (int)info.JLMJFEDNBMF; //CoinNum
+        dbInfo.ByteValue = info.MHINKADJCCG.ToByteArray(); //HandByteValue
 
         return (Retcode.RetSucc, dbInfo);
     }

@@ -80,13 +80,13 @@ public class PlayerData : BaseDatabaseDataHelper
         };
     }
 
-    public LobbyPlayerBasicInfo ToLobbyProto()
+    public PlayerSimpleInfo ToLobbyProto()
     {
-        return new LobbyPlayerBasicInfo
+        return new PlayerSimpleInfo
         {
             Nickname = Name,
             Level = (uint)Level,
-            HeadIconFrameId = (uint)HeadIcon,
+            HeadIcon = (uint)HeadIcon,
             Platform = PlatformType.Pc,
             Uid = (uint)Uid
         };
@@ -158,12 +158,12 @@ public class PlayerData : BaseDatabaseDataHelper
             Level = (uint)Level,
             Signature = Signature,
             IsBanned = false,
-            ShowDisplayAvatar = true,
             HeadIcon = (uint)HeadIcon,
-            PersonalCard = (uint)PersonalCard,
+            PersonalCard = (uint)PersonalCard, //OGJGMNBPPLE??
             Platform = PlatformType.Pc,
             Uid = (uint)Uid,
             WorldLevel = (uint)WorldLevel,
+            NHIDOAAMLNF = true,
             RecordInfo = new PlayerRecordInfo(),
             PrivacySettings = PrivacySettings.ToProto(),
             HeadFrameInfo = HeadFrame.ToProto()
@@ -220,7 +220,7 @@ public class PlayerHeadFrameInfo
         return new HeadFrameInfo
         {
             HeadFrameExpireTime = HeadFrameExpireTime,
-            HeadFrameId = HeadFrameId
+            HeadFrameItemId = HeadFrameId
         };
     }
 }
@@ -237,11 +237,12 @@ public class PrivacySettingsPb
     {
         return new PrivacySettings
         {
-            DisplayChallengeLineup = DisplayChallengeLineup,
-            DisplayActiveState = DisplayActiveState,
-            DisplayRecentlyState = DisplayRecentlyState,
-            DisplayBattleRecord = DisplayBattleRecord,
-            DisplayCollection = DisplayCollection
+            // 孩子，我也分不清
+            LPEPIDNJDEM = DisplayChallengeLineup,
+            CHCNEDNCIDJ = DisplayActiveState,
+            CPOGDKALGOM = DisplayRecentlyState,
+            FIJNAPNICJF = DisplayBattleRecord,
+            NHLKFBOBDOM = DisplayCollection
         };
     }
 
@@ -249,12 +250,13 @@ public class PrivacySettingsPb
     {
         return new PlayerSettingInfo
         {
-            DisplayChallengeLineup = DisplayChallengeLineup,
-            DisplayActiveState = DisplayActiveState,
-            DisplayRecentlyState = DisplayRecentlyState,
-            DisplayBattleRecord = DisplayBattleRecord,
-            DisplayCollection = DisplayCollection,
-            ExtraSettingsInfo = new PlayerExtraSettingsInfo()
+            //BNIJBEAJPDN = DisplayChallengeLineup,
+            //JLJFENCPGHO = DisplayActiveState,
+            //LJDJALDEGKE = DisplayRecentlyState,
+            //OFPJKPJFPFP = DisplayBattleRecord,
+            //IIDDIHBKAGE = DisplayCollection,
+            //MNLGJHEMADN = DisplayBattleRecord,
+            EHKLNPCMMHE = new OEEEAEJBENB()
         };
     }
 }

@@ -480,7 +480,7 @@ public class FormalAvatarInfo : BaseAvatarInfo
                 Rank = (uint)pathInfo.Rank,
                 PathEquipmentId = (uint)pathInfo.EquipId,
                 DressedSkinId = (uint)pathInfo.Skin,
-                EnhancedId = (uint)pathInfo.EnhanceId
+                UnkEnhancedId = (uint)pathInfo.EnhanceId
             };
 
             foreach (var skill in pathInfo.GetSkillTree())
@@ -494,7 +494,7 @@ public class FormalAvatarInfo : BaseAvatarInfo
 
                 proto.AvatarPathSkillTree.Add(new AvatarPathSkillTree
                 {
-                    MultiPointId = (uint)multiPointId,
+                    PointId = (uint)multiPointId,
                     Level = (uint)skill.Value
                 });
             }

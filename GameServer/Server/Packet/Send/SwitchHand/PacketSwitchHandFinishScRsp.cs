@@ -10,7 +10,7 @@ public class PacketSwitchHandFinishScRsp : BasePacket
     {
         var proto = new SwitchHandFinishScRsp
         {
-            HandInfo = info.ToProto()
+            OMHAENBIKCN = info.ToSwitchHandProto() //HandInfo
         };
 
         SetData(proto);

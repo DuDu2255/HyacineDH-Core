@@ -355,13 +355,13 @@ public class GachaManager : BasePlayerManager
             if (costItemId == 0) continue;
 
             var count = Player.InventoryManager?.GetItem(costItemId)?.Count ?? 0;
-            var info = new OMMDLBPNGEK
+            var info = new OEIEJHBCOOM
             {
-                KIFIEAKAJCK = (uint)costItemId,
-                FMEFMDOAHCD = (uint)count
+                MBOEFLAHLEM = (uint)costItemId,
+                PAPOKACIPPJ = (uint)count
             };
-            info.GAGHECOHOMC.AddRange(gachaIds.Select(x => (uint)x));
-            proto.CAIBCNMEMJP.Add(info);
+            info.DGOMHDMJHEK.AddRange(gachaIds.Select(x => (uint)x));
+            proto.NMBAAOBBJMI.Add(info);
         }
 
         return proto;

@@ -5,21 +5,22 @@ namespace HyacineCore.Server.GameServer.Server.Packet.Send.SwitchHand;
 
 public class PacketSwitchHandCoinUpdateScRsp : BasePacket
 {
-    public PacketSwitchHandCoinUpdateScRsp(Retcode ret) : base(CmdIds.SwitchHandCoinUpdateScRsp)
+    // 没有找到这个消息的 proto 定义
+    public PacketSwitchHandCoinUpdateScRsp(Retcode ret) : base(CmdIds.None)
     {
-        var proto = new MFFOCLIECJJ
-        {
-            Retcode = (uint)ret
-        };
-        SetData(proto);
+        //var proto = new PJGAKDEDHAH
+        //{
+        //    Retcode = (uint)ret
+        //};
+        //SetData(proto);
     }
 
-    public PacketSwitchHandCoinUpdateScRsp(uint coinNum) : base(CmdIds.SwitchHandCoinUpdateScRsp)
+    public PacketSwitchHandCoinUpdateScRsp(uint coinNum) : base(CmdIds.None)
     {
-        var proto = new MFFOCLIECJJ
-        {
-            CKNFABPOMBL = coinNum
-        };
-        SetData(proto);
+        //var proto = new PJGAKDEDHAH
+        //{
+        //    JMMIHOEDFCG = coinNum
+        //};
+        //SetData(proto);
     }
 }

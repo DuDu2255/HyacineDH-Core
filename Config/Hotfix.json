@@ -2,11 +2,11 @@
   "Region": "None",
   "HotfixData": {
     "CN4.0.0": {
-      "AssetBundleUrl": "",
+      "AssetBundleUrl": "asb/V4.0Live/output_14002058_83ee9d3884b0_c09898574b2528",
       "ExAssetBundleUrl": "",
-      "ExResourceUrl": "",
-      "LuaUrl": "",
-      "IfixUrl": ""
+      "ExResourceUrl": "design_data/V4.0Live/output_14115315_33c4e418754e_a42fc9e04473ff",
+      "LuaUrl": "lua/V4.0Live/output_14113962_43e20736cdc3_527c880887be60",
+      "IfixUrl": "ifix/V4.0Live/output_14113737_87337094aab1_3898fb5cc3d2bd"
     },
     "OS4.0.0": {
       "AssetBundleUrl": "asb/V4.0Live/output_14002058_83ee9d3884b0_c09898574b2528",
@@ -14,6 +14,34 @@
       "ExResourceUrl": "design_data/V4.0Live/output_14115315_33c4e418754e_a42fc9e04473ff",
       "LuaUrl": "lua/V4.0Live/output_14113962_43e20736cdc3_527c880887be60",
       "IfixUrl": "ifix/V4.0Live/output_14113737_87337094aab1_3898fb5cc3d2bd"
+    },
+    "CNBETA4.1.51": {
+      "AssetBundleUrl": "asb/BetaLive/output_14372365_fa78e03ad599_36972b4e3bb553",
+      "ExAssetBundleUrl": "",
+      "ExResourceUrl": "design_data/BetaLive/output_14405385_04f23a94d64e_380c519bb674db",
+      "LuaUrl": "lua/BetaLive/output_14358961_e055a63b3c34_b199a0234548b5",
+      "IfixUrl": "ifix/BetaLive/output_14374543_04d971175704_ab00cb3f54bb00"
+    },
+    "OSBETA4.1.51": {
+      "AssetBundleUrl": "asb/BetaLive/output_14372365_fa78e03ad599_36972b4e3bb553",
+      "ExAssetBundleUrl": "",
+      "ExResourceUrl": "design_data/BetaLive/output_14405385_04f23a94d64e_380c519bb674db",
+      "LuaUrl": "lua/BetaLive/output_14358961_e055a63b3c34_b199a0234548b5",
+      "IfixUrl": "ifix/BetaLive/output_14374543_04d971175704_ab00cb3f54bb00"
+    },
+    "CNBETA4.1.52": {
+      "AssetBundleUrl": "asb/BetaLive/output_14420305_7a74f0e95f84_edf69bcd963b3a",
+      "ExAssetBundleUrl": "",
+      "ExResourceUrl": "design_data/BetaLive/output_14427120_6f7bdcd832cf_5c861411529529",
+      "LuaUrl": "lua/BetaLive/output_14426018_808f7828fdd4_646eb1de0d5580",
+      "IfixUrl": "ifix/BetaLive/output_14460274_5ed5ff5977db_299d2e7b72efe8"
+    },
+    "OSBETA4.1.52": {
+      "AssetBundleUrl": "asb/BetaLive/output_14420305_7a74f0e95f84_edf69bcd963b3a",
+      "ExAssetBundleUrl": "",
+      "ExResourceUrl": "design_data/BetaLive/output_14427120_6f7bdcd832cf_5c861411529529",
+      "LuaUrl": "lua/BetaLive/output_14426018_808f7828fdd4_646eb1de0d5580",
+      "IfixUrl": "ifix/BetaLive/output_14460274_5ed5ff5977db_299d2e7b72efe8"
     }
   }
 }

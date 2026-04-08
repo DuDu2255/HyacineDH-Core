@@ -6,9 +6,9 @@ namespace HyacineCore.Server.GameServer.Server.Packet.Send.BattleCollege;
 
 public class PacketBattleCollegeDataChangeScNotify : BasePacket
 {
-    public PacketBattleCollegeDataChangeScNotify(PlayerInstance player) : base(CmdIds.BattleCollegeDataChangeScNotify)
+    public PacketBattleCollegeDataChangeScNotify(PlayerInstance player) : base(CmdIds.SyncBattleCollegeDataChangeScNotify)
     {
-        var proto = new BattleCollegeDataChangeScNotify();
+        var proto = new SyncBattleCollegeDataChangeScNotify();
 
         foreach (var id in player.BattleCollegeData?.FinishedCollegeIdList ?? [])
             proto.FinishedCollegeIdList.Add((uint)id);

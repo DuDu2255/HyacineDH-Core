@@ -9,8 +9,8 @@ public class HandlerMarbleLevelFinishCsReq : Handler
 {
     public override async Task OnHandle(Connection connection, byte[] header, byte[] data)
     {
-        var req = CJIBLEHFKHH.Parser.ParseFrom(data);
+        var req = IFJDJKMMABL.Parser.ParseFrom(data);
 
-        await connection.SendPacket(new PacketMarbleLevelFinishScRsp(req.PKAADCNKGHF));
+        await connection.SendPacket(new PacketMarbleLevelFinishScRsp(req.IOJKDGCFCGG));
     }
 }

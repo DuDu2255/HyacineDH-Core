@@ -462,6 +462,7 @@ public enum MissionFinishTypeEnum
     RogueTournGetFormulaCnt = 230007,
     RogueTournGetEventCnt = 230008,
     MatchThreeFinishLevel = 230009,
+    ChenLingBattleFinishStage = 230009,
     MatchThreeBirdUseSkill = 230010,
     MatchThreeFinishPvp = 230011,
     MatchThreePvpScore = 230012,
@@ -821,6 +822,9 @@ public enum MissionFinishTypeEnum
 
     ChenLingGameBoyFinish = 380300,
     ChenLingGameBoyFinishChallengeCnt = 380301,
+    // Newer ChenLing battle finish types from resource pack.
+    ChenLingBattleActivatedPrivilegeCnt = 380302,
+    ChenLingBattleFinalStagePassWaveCnt = 380303,
 
     ChestMonsterFinish = 380400,
 
@@ -845,4 +849,9 @@ public enum MissionFinishTypeEnum
 
     RogueTournFinishWithMiracleCountListContain = 380900,
     RogueTournFinishWithOpenedChestCount = 380901,
+    // Newer RogueTourn Persona finish types from resource pack.
+    RogueTournPersonaFinishWithRoomAttributeCnt = 380902,
+    RogueTournPersonaFinishWithRoomCardNumAndLevelCnt = 380903,
+    RogueTournPersonaFinishWithStyleIDCnt = 380904,
+    RogueTournPersonaHandBookUnlockedGiftCnt = 380905,
 }

@@ -1,23 +1,27 @@
-using HyacineCore.Server.Enums;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace HyacineCore.Server.Configuration;
 
 public class HotfixContainer
 {
-    [JsonConverter(typeof(StringEnumConverter))]
-    public BaseRegionEnum Region { get; set; } = BaseRegionEnum.None;
-
     public Dictionary<string, DownloadUrlConfig> HotfixData { get; set; } = [];
 }
 
 public class DownloadUrlConfig
 {
+    [JsonProperty("asset_bundle_url")]
     public string AssetBundleUrl { get; set; } = "";
-    public string ExAssetBundleUrl { get; set; } = "";
+
+    [JsonProperty("asset_bundle_url_b")]
+    public string AssetBundleUrlB { get; set; } = "";
+
+    [JsonProperty("ex_resource_url")]
     public string ExResourceUrl { get; set; } = "";
+
+    [JsonProperty("lua_url")]
     public string LuaUrl { get; set; } = "";
+
+    [JsonProperty("ifix_url")]
     public string IfixUrl { get; set; } = "";
 }
 

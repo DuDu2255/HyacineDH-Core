@@ -48,6 +48,7 @@ public class SwitchHandComponent(PlayerInstance player) : BasePlayerComponent(pl
         return (Retcode.RetSucc, info);
     }
 
+    // We keep old semantic field names via LegacyProtoCompat.
     public (Retcode, SwitchHandInfo?) UpdateHandInfo(HandInfo info)
     {
         var dbInfo = GetHandInfo((int)info.ConfigId).Item2;

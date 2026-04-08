@@ -29,7 +29,7 @@ public class UsernameLoginHandler
         if (accountData != null)
         {
             res.message = "OK";
-            res.data = new VerifyData(accountData.Uid.ToString(), accountData.Username + "@egglink.me",
+            res.data = new VerifyData(accountData.Uid.ToString(), accountData.Username + "@StarRail.com",
                 accountData.GenerateDispatchToken());
             res.data.account.name = accountData.Username;
             res.data.account.is_email_verify = "1";

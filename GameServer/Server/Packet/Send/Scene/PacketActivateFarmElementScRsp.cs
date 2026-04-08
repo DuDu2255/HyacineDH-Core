@@ -8,7 +8,7 @@ public class PacketActivateFarmElementScRsp : BasePacket
 {
     public PacketActivateFarmElementScRsp(uint entityId, PlayerInstance player) : base(CmdIds.ActivateFarmElementScRsp)
     {
-        var proto = new ActivateFarmElementScRsp
+        var proto = new ActiveFarmElementScRsp
         {
             EntityId = entityId,
             WorldLevel = (uint)player.Data.WorldLevel

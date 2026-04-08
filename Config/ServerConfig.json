@@ -4,6 +4,7 @@
     "PublicAddress": "127.0.0.1",
     "Port": 21000,
     "UseSSL": false,
+    "SendHotfix": true,
     "UseFetchRemoteHotfix": false
   },
   "KeyStore": {
@@ -80,14 +81,13 @@
     },
     "AutoCreateUser": true,
     "LogOption": {
-      "EnableGamePacketLog": true,
-      "LogPacketToConsole": true,
-      "DebugShowJsonText": true,
-      "ShowKcpHandShake": true,
+      "EnableGamePacketLog": false,
+      "LogPacketToConsole": false,
+      "ShowKcpHandShake": false,
       "ShowTimeInLog": true,
       "DisableLogDetailPacket": false,
       "SavePersonalDebugFile": false,
-      "ShowResourceCacheLoadingItemLog": true
+      "ShowResourceCacheLoadingItemLog": false
     },
     "ServerConfig": {
       "RunDispatch": true,

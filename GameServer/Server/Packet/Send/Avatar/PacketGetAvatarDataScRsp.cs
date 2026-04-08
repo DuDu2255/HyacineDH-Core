@@ -11,7 +11,8 @@ public class PacketGetAvatarDataScRsp : BasePacket
     {
         var proto = new GetAvatarDataScRsp
         {
-            IsGetAll = true
+            IsGetAll = true,
+            PlayerOutfitData = player.Data.ToPlayerOutfitProto()
         };
 
         player.PlayerUnlockData!.Skins.Values.ToList().ForEach(skin =>

@@ -12,7 +12,7 @@ public class HandlerUnlockSkilltreeCsReq : Handler
 {
     public override async Task OnHandle(Connection connection, byte[] header, byte[] data)
     {
-        var req = UnlockSkilltreeCsReq.Parser.ParseFrom(data);
+        var req = UnlockSkillTreeCsReq.Parser.ParseFrom(data);
         var player = connection.Player!;
         GameData.AvatarSkillTreeConfigData.TryGetValue((int)(req.PointId * 100 + req.Level), out var config);
         if (config == null)

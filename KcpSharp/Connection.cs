@@ -17,7 +17,7 @@ public class HyacineCoreConnection
     public static readonly ConcurrentBag<int> IgnoreLog =
     [
         CmdIds.PlayerHeartBeatCsReq, CmdIds.PlayerHeartBeatScRsp, CmdIds.SceneEntityMoveCsReq,
-        CmdIds.SceneEntityMoveScRsp, CmdIds.GetShopListCsReq, CmdIds.GetShopListScRsp, CmdIds.FightHeartBeatScRsp
+        CmdIds.SceneEntityMoveScRsp, CmdIds.GetShopListCsReq, CmdIds.GetShopListScRsp, CmdIds.PlayerHeartBeatScRsp
     ];
 
     protected readonly CancellationTokenSource CancelToken;
@@ -77,7 +77,7 @@ public class HyacineCoreConnection
 
         var packetName = LogMap.GetValueOrDefault(opcode, "UnknownPacket");
         var output = $"{sendOrRecv}: {packetName}({opcode})";
-        var showJsonText = logOption.DebugShowJsonText && !logOption.DisableLogDetailPacket;
+        var showJsonText = !logOption.DisableLogDetailPacket;
 
         if (showJsonText)
         {
@@ -146,7 +146,8 @@ public class HyacineCoreConnection
         // Test
         if (packet.CmdId <= 0)
         {
-            Logger.Debug("Tried to send packet with missing cmd id!");
+            if (ConfigManager.Config.ServerOption.LogOption.EnableGamePacketLog)
+                Logger.Debug("Tried to send packet with missing cmd id!");
             return;
         }
 

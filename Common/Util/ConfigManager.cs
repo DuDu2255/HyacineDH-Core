@@ -69,37 +69,23 @@ public static class ConfigManager
     {
         var file = new FileInfo(HotfixFilePath);
 
-        // Generate all necessary versions
-        var verList = new List<string>();
-        var prefix = new List<string> { "CN", "OS" };
-        foreach (var pre in prefix)
-            if (GameConstants.GAME_VERSION[^1] == '5')
-                for (var i = 1; i < 6; i++)
-                    verList.Add(pre + GameConstants.GAME_VERSION + i);
-            else
-                verList.Add(pre + GameConstants.GAME_VERSION);
-
         if (!file.Exists)
         {
             Hotfix = new HotfixContainer();
-            SaveData(Hotfix, HotfixFilePath);
-            file.Refresh();
+            SaveData(Hotfix.HotfixData, HotfixFilePath);
+            Logger.Info(I18NManager.Translate("Server.ServerInfo.CurrentVersion", GameConstants.GAME_VERSION));
+            return;
         }
 
         using (var stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
         using (var reader = new StreamReader(stream))
         {
             var json = reader.ReadToEnd();
-            Hotfix = JsonConvert.DeserializeObject<HotfixContainer>(json)!;
+            var data = JsonConvert.DeserializeObject<Dictionary<string, DownloadUrlConfig>>(json) ?? [];
+            Hotfix = new HotfixContainer { HotfixData = data };
         }
 
-        foreach (var version in verList)
-            if (!Hotfix.HotfixData.TryGetValue(version, out _))
-                Hotfix.HotfixData[version] = new DownloadUrlConfig();
-
         Logger.Info(I18NManager.Translate("Server.ServerInfo.CurrentVersion", GameConstants.GAME_VERSION));
-
-        SaveData(Hotfix, HotfixFilePath);
     }
 
     private static void SaveData(object data, string path)

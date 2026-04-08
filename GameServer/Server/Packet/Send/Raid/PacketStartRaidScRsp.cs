@@ -9,16 +9,7 @@ public class PacketStartRaidScRsp : BasePacket
 {
     public PacketStartRaidScRsp(RaidRecord record, PlayerInstance player) : base(CmdIds.StartRaidScRsp)
     {
-        var proto = new StartRaidScRsp
-        {
-            Scene = new OGLAIJDPIOE
-            {
-                Lineup = player.LineupManager!.GetCurLineup()!.ToProto(),
-                RaidId = (uint)record.RaidId,
-                AKHMIOEJMBE = player.SceneInstance!.ToProto(),
-                WorldLevel = (uint)record.WorldLevel
-            }
-        };
+        var proto = new StartRaidScRsp();
 
         SetData(proto);
     }

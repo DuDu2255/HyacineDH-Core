@@ -24,10 +24,7 @@ public class CommandReload : ICommand
     public async ValueTask ReloadActivity(CommandArg arg)
     {
         // Reload the activities
-        GameData.ActivityConfig =
-            ResourceManager.LoadCustomFile<ActivityConfig>("Activity", "ActivityConfig",
-                ConfigManager.Config.Path.GameDataPath) ??
-            new ActivityConfig();
+        GameData.ActivityConfig = ResourceManager.LoadActivityConfigFromExcelOutput() ?? new ActivityConfig();
         await arg.SendMsg(I18NManager.Translate("Game.Command.Reload.ConfigReloaded",
             I18NManager.Translate("Word.Activity")));
     }

@@ -350,19 +350,7 @@ public class GachaManager : BasePlayerManager
             set.Add(banner.GachaId);
         }
 
-        foreach (var (costItemId, gachaIds) in gachaIdsByCostItem)
-        {
-            if (costItemId == 0) continue;
-
-            var count = Player.InventoryManager?.GetItem(costItemId)?.Count ?? 0;
-            var info = new OMMDLBPNGEK
-            {
-                KIFIEAKAJCK = (uint)costItemId,
-                FMEFMDOAHCD = (uint)count
-            };
-            info.GAGHECOHOMC.AddRange(gachaIds.Select(x => (uint)x));
-            proto.CAIBCNMEMJP.Add(info);
-        }
+        // New proto shape differs; keep banner list only for now.
 
         return proto;
     }

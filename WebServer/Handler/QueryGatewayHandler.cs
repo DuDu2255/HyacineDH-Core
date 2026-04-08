@@ -1,7 +1,5 @@
-﻿using System.Text.RegularExpressions;
 using HyacineCore.Server.Configuration;
 using HyacineCore.Server.Data;
-using HyacineCore.Server.Enums;
 using HyacineCore.Server.Internationalization;
 using HyacineCore.Server.Proto;
 using HyacineCore.Server.Util;
@@ -10,9 +8,16 @@ using Google.Protobuf;
 
 namespace HyacineCore.Server.WebServer.Handler;
 
-internal partial class QueryGatewayHandler
+internal class QueryGatewayHandler
 {
     public static Logger Logger = new("GatewayServer");
+    private static bool GatewayDebugEnabled => ConfigManager.Config.ServerOption.LogOption.EnableGamePacketLog;
+    private static void Debug(string message)
+    {
+        if (GatewayDebugEnabled)
+            Logger.Debug(message);
+    }
+
     public string Data;
 
     public QueryGatewayHandler(GateWayRequest req)
@@ -20,19 +25,16 @@ internal partial class QueryGatewayHandler
         var config = ConfigManager.Config;
 
         var isNewFormat = string.Equals(req.is_new_format, "1", StringComparison.Ordinal);
-        Logger.Debug($"query_gateway begin: version={req.version} uid={req.uid} lang={req.language_type} platform={req.platform_type} channel={req.channel_id}/{req.sub_channel_id} is_new_format={isNewFormat}");
+        Debug($"query_gateway begin: version={req.version} uid={req.uid} lang={req.language_type} platform={req.platform_type} channel={req.channel_id}/{req.sub_channel_id} is_new_format={isNewFormat}");
 
-        // build gateway proto
         var gateServer = new GateServer
         {
             RegionName = config.GameServer.GameServerId,
             Ip = config.GameServer.PublicAddress,
             Port = config.GameServer.Port,
-            // Match LC behavior: provide a generic error string (retcode is still 0).
             Msg = "Access verification failed. Please check if you have logged in to the correct account and server.",
         };
 
-        // Align with QueryGatewayHandler: only set these field. useTCP = false
         gateServer.Unk1 = true;
         gateServer.Unk2 = true;
         gateServer.Unk3 = true;
@@ -47,47 +49,43 @@ internal partial class QueryGatewayHandler
         if (ConfigManager.Config.GameServer.UsePacketEncryption)
             gateServer.ClientSecretKey = Convert.ToBase64String(Crypto.ClientSecretKey!.GetBytes());
 
-        // Auto separate CN/OS prefix
-        var region = ConfigManager.Hotfix.Region;
-        if (region == BaseRegionEnum.None) _ = Enum.TryParse(req.version[..2], out region);
-        var baseUrl = region switch
-        {
-            BaseRegionEnum.CN => BaseUrl.CN,
-            BaseRegionEnum.OS => BaseUrl.OS,
-            _ => BaseUrl.OS
-        };
+        var baseUrl = req.version.StartsWith("CN", StringComparison.OrdinalIgnoreCase) ? BaseUrl.CN : BaseUrl.OS;
 
         var remoteHotfixSuccess = false;
-        if (ConfigManager.Config.HttpServer.UseFetchRemoteHotfix)
+        if (ConfigManager.Config.HttpServer.SendHotfix && ConfigManager.Config.HttpServer.UseFetchRemoteHotfix)
         {
-            remoteHotfixSuccess = FetchRemoteHotfix(req, region, gateServer).GetAwaiter().GetResult();
+            remoteHotfixSuccess = FetchRemoteHotfix(req, gateServer).GetAwaiter().GetResult();
         }
 
-        if (!remoteHotfixSuccess)
+        if (ConfigManager.Config.HttpServer.SendHotfix)
         {
-            UseLocalHotfix(req, region, baseUrl, gateServer);
+            if (!remoteHotfixSuccess) UseLocalHotfix(req, baseUrl, gateServer);
+        }
+        else
+        {
+            SetEmptyHotfix(gateServer);
         }
 
         if (!ResourceManager.IsLoaded)
         {
             Logger.Warn("query_gateway requested before ResourceManager finished loading; returning retcode=0 for client compatibility");
         }
+
         Logger.Info("Client request: query_gateway");
 
         var bytes = gateServer.ToByteArray();
         Data = Convert.ToBase64String(bytes);
 
-        Logger.Debug($"query_gateway result: protoBytes={bytes.Length}, base64Length={Data.Length}, retcode={gateServer.Retcode}");
-        Logger.Debug($"query_gateway gate: region={gateServer.RegionName} ip={gateServer.Ip} port={gateServer.Port} encryption={(gateServer.ClientSecretKey?.Length ?? 0) > 0}");
-        Logger.Debug($"query_gateway hotfix: ab={gateServer.AssetBundleUrl} exRes={gateServer.ExResourceUrl} lua={gateServer.LuaUrl} ifix={gateServer.IfixUrl}");
+        Debug($"query_gateway result: protoBytes={bytes.Length}, base64Length={Data.Length}, retcode={gateServer.Retcode}");
+        Debug($"query_gateway gate: region={gateServer.RegionName} ip={gateServer.Ip} port={gateServer.Port} encryption={(gateServer.ClientSecretKey?.Length ?? 0) > 0}");
+        Debug($"query_gateway hotfix: ab={gateServer.AssetBundleUrl} exRes={gateServer.ExResourceUrl} lua={gateServer.LuaUrl} ifix={gateServer.IfixUrl}");
     }
 
-    private async Task<bool> FetchRemoteHotfix(GateWayRequest req, BaseRegionEnum region, GateServer gateServer)
+    private async Task<bool> FetchRemoteHotfix(GateWayRequest req, GateServer gateServer)
     {
         try
         {
             var gatewayUrl = GetGatewayUrlByVersion(req.version);
-            // build query params
             var queryParams = new Dictionary<string, string>
             {
                 ["version"] = req.version,
@@ -113,11 +111,9 @@ internal partial class QueryGatewayHandler
             {
                 try
                 {
-                    // parse base64 response
                     var bytes = Convert.FromBase64String(response);
                     var remoteGateServer = GateServer.Parser.ParseFrom(bytes);
 
-                    // check if remote hotfix urls are valid, if not use local configuration
                     if (!string.IsNullOrEmpty(remoteGateServer.AssetBundleUrl))
                     {
                         gateServer.AssetBundleUrl = remoteGateServer.AssetBundleUrl;
@@ -125,13 +121,10 @@ internal partial class QueryGatewayHandler
                         gateServer.ExResourceUrl = remoteGateServer.ExResourceUrl;
                         gateServer.LuaUrl = remoteGateServer.LuaUrl;
                         gateServer.IfixUrl = remoteGateServer.IfixUrl;
-
                         return true;
                     }
-                    else
-                    {
-                        Logger.Warn("Remote hotfix return empty, fall back to local hotfix");
-                    }
+
+                    Logger.Warn("Remote hotfix return empty, fall back to local hotfix");
                 }
                 catch (Exception ex)
                 {
@@ -151,23 +144,14 @@ internal partial class QueryGatewayHandler
         return false;
     }
 
-    private void UseLocalHotfix(GateWayRequest req, BaseRegionEnum region, string baseUrl, GateServer gateServer)
+    private void UseLocalHotfix(GateWayRequest req, string baseUrl, GateServer gateServer)
     {
-        var keys = GetHotfixLookupKeys(req.version);
-        DownloadUrlConfig? urls = null;
-        foreach (var key in keys)
-        {
-            if (ConfigManager.Hotfix.HotfixData.TryGetValue(key, out urls) && urls != null)
-            {
-                Logger.Debug($"query_gateway local hotfix match: version={req.version} key={key}");
-                break;
-            }
-        }
+        ConfigManager.Hotfix.HotfixData.TryGetValue(req.version, out var urls);
 
         if (urls != null)
         {
             gateServer.AssetBundleUrl = NormalizeHotfixUrl(baseUrl, urls.AssetBundleUrl);
-            gateServer.AssetBundleUrlAndroid = NormalizeHotfixUrl(baseUrl, urls.ExAssetBundleUrl);
+            gateServer.AssetBundleUrlAndroid = NormalizeHotfixUrl(baseUrl, urls.AssetBundleUrlB);
             gateServer.ExResourceUrl = NormalizeHotfixUrl(baseUrl, urls.ExResourceUrl);
             gateServer.LuaUrl = NormalizeHotfixUrl(baseUrl, urls.LuaUrl);
             gateServer.IfixUrl = NormalizeHotfixUrl(baseUrl, urls.IfixUrl);
@@ -176,38 +160,6 @@ internal partial class QueryGatewayHandler
         {
             Logger.Warn($"No local hotfix found for version: {req.version}");
         }
-    }
-
-    private static IReadOnlyList<string> GetHotfixLookupKeys(string version)
-    {
-        var keys = new List<string>();
-        if (!string.IsNullOrWhiteSpace(version)) keys.Add(version);
-
-        // keep CNBETA/OSBETA etc, only drop platform tokens
-        var noPlatform = version.Replace("Win", "", StringComparison.OrdinalIgnoreCase)
-            .Replace("Android", "", StringComparison.OrdinalIgnoreCase)
-            .Replace("iOS", "", StringComparison.OrdinalIgnoreCase);
-        if (!string.Equals(noPlatform, version, StringComparison.Ordinal) && !string.IsNullOrWhiteSpace(noPlatform))
-            keys.Add(noPlatform);
-
-        // legacy mapping: strip all known tags (existing behavior)
-        var stripped = VersionRegex().Replace(version, "");
-        if (!string.IsNullOrWhiteSpace(stripped) && !keys.Contains(stripped))
-            keys.Add(stripped);
-
-        // coarse fallbacks like OS4.0.0 / CN4.0.0
-        if (version.StartsWith("CN", StringComparison.OrdinalIgnoreCase))
-        {
-            if (!keys.Contains("CN4.0.0")) keys.Add("CN4.0.0");
-            if (!keys.Contains("CN3.7.0")) keys.Add("CN3.7.0");
-        }
-        else if (version.StartsWith("OS", StringComparison.OrdinalIgnoreCase))
-        {
-            if (!keys.Contains("OS4.0.0")) keys.Add("OS4.0.0");
-            if (!keys.Contains("OS3.7.0")) keys.Add("OS3.7.0");
-        }
-
-        return keys;
     }
 
     private static string NormalizeHotfixUrl(string baseUrl, string value)
@@ -221,6 +173,15 @@ internal partial class QueryGatewayHandler
 
         if (value.StartsWith("/", StringComparison.Ordinal)) return baseUrl.TrimEnd('/') + value;
         return baseUrl.TrimEnd('/') + "/" + value;
+    }
+
+    private static void SetEmptyHotfix(GateServer gateServer)
+    {
+        gateServer.AssetBundleUrl = string.Empty;
+        gateServer.AssetBundleUrlAndroid = string.Empty;
+        gateServer.ExResourceUrl = string.Empty;
+        gateServer.LuaUrl = string.Empty;
+        gateServer.IfixUrl = string.Empty;
     }
 
     private string GetGatewayUrlByVersion(string version)
@@ -241,21 +202,9 @@ internal partial class QueryGatewayHandler
         {
             return GateWayBaseUrl.OSBETA;
         }
-        else
-        {
-            // default fallback based on region prefix
-            var region = version[..2];
-            if (region.Equals("CN", StringComparison.OrdinalIgnoreCase))
-            {
-                return GateWayBaseUrl.CNPROD;
-            }
-            else
-            {
-                return GateWayBaseUrl.OSPROD;
-            }
-        }
-    }
 
-    [GeneratedRegex(@"BETA|PROD|CECREATION|Android|Win|iOS")]
-    private static partial Regex VersionRegex();
+        var region = version[..2];
+        return region.Equals("CN", StringComparison.OrdinalIgnoreCase) ? GateWayBaseUrl.CNPROD : GateWayBaseUrl.OSPROD;
+    }
 }
+

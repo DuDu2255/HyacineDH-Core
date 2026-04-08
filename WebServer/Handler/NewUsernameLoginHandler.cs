@@ -29,7 +29,7 @@ public class NewUsernameLoginHandler
         if (accountData != null)
         {
             res.message = "OK";
-            res.data = new VerifyData(accountData.Uid.ToString(), accountData.Username + "@egglink.me",
+            res.data = new VerifyData(accountData.Uid.ToString(), accountData.Username + "@StarRail.com",
                 accountData.GenerateDispatchToken());
 
             res.data.user_info.account_name = accountData.Username;

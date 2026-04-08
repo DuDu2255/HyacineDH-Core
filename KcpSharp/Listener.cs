@@ -46,7 +46,9 @@ public class HyacineCoreListener
         TryDisableUdpConnReset(UDPListener);
         KCPTransport = KcpSocketTransport.CreateMultiplexConnection(UDPClient, 1400);
         KCPTransport.Start();
-        Logger.Debug($"UDP listener bound: {ListenAddress} public={ConfigManager.Config.GameServer.PublicAddress}:{PORT}");
+        if (ShouldShowHandshakeLog())
+            Logger.Debug(
+                $"UDP listener bound: {ListenAddress} public={ConfigManager.Config.GameServer.PublicAddress}:{PORT}");
         Logger.Info(I18NManager.Translate("Server.ServerInfo.ServerRunning", I18NManager.Translate("Word.Game"),
             ConfigManager.Config.GameServer.GetDisplayAddress()));
     }

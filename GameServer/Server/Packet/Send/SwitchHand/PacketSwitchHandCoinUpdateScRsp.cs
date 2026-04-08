@@ -7,7 +7,7 @@ public class PacketSwitchHandCoinUpdateScRsp : BasePacket
 {
     public PacketSwitchHandCoinUpdateScRsp(Retcode ret) : base(CmdIds.SwitchHandCoinUpdateScRsp)
     {
-        var proto = new MFFOCLIECJJ
+        var proto = new SwitchHandCoinUpdateScRsp
         {
             Retcode = (uint)ret
         };
@@ -16,7 +16,7 @@ public class PacketSwitchHandCoinUpdateScRsp : BasePacket
 
     public PacketSwitchHandCoinUpdateScRsp(uint coinNum) : base(CmdIds.SwitchHandCoinUpdateScRsp)
     {
-        var proto = new MFFOCLIECJJ
+        var proto = new SwitchHandCoinUpdateScRsp
         {
             CKNFABPOMBL = coinNum
         };

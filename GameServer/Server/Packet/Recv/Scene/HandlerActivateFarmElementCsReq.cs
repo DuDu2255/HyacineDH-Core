@@ -9,7 +9,7 @@ public class HandlerActivateFarmElementCsReq : Handler
 {
     public override async Task OnHandle(Connection connection, byte[] header, byte[] data)
     {
-        var req = ActivateFarmElementCsReq.Parser.ParseFrom(data);
+        var req = ActiveFarmElementCsReq.Parser.ParseFrom(data);
 
         await connection.SendPacket(new PacketActivateFarmElementScRsp(req.EntityId, connection.Player!));
     }

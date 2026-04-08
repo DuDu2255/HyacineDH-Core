@@ -82,6 +82,7 @@ public class SwitchHandInfo
     public uint State { get; set; } = 101;
     public byte[] ByteValue { get; set; } = [];
 
+    // Field mapping for unresolved obfuscated members is handled by LegacyProtoCompat.
     public HandInfo ToProto()
     {
         return new HandInfo

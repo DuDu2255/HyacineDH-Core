@@ -57,7 +57,13 @@ public class SceneInstance
             EntryId = (uint)EntryId,
             SceneMissionInfo = new MissionStatusBySceneInfo(),
             DimensionId = (uint)(EntityLoader is StoryLineEntityLoader loader ? loader.DimensionId : 0),
-            GameStoryLineId = (uint)(Player.StoryLineManager?.StoryLineData.CurStoryLineId ?? 0)
+            GameStoryLineId = (uint)(Player.StoryLineManager?.StoryLineData.CurStoryLineId ?? 0),
+            // 4.2.0 client expects SceneInfo.SceneIdentifier to be present during scene sync.
+            SceneIdentifier = new SceneIdentifier
+            {
+                FloorId = (uint)FloorId,
+                GameStoryLineId = (uint)(Player.StoryLineManager?.StoryLineData.CurStoryLineId ?? 0)
+            }
         };
 
         var playerGroupInfo = new SceneEntityGroupInfo(); // avatar group
@@ -94,7 +100,7 @@ public class SceneInstance
                 groups.Add(new SceneEntityGroupInfo
                 {
                     GroupId = (uint)entity.Value.GroupId,
-                    GroupPropertyMap = { resProperty }
+                    OPLJDFOOMGF = { resProperty }
                 });
             }
 
@@ -116,7 +122,7 @@ public class SceneInstance
                 groups.Add(new SceneEntityGroupInfo
                 {
                     GroupId = (uint)groupId,
-                    GroupPropertyMap = { resProperty }
+                    OPLJDFOOMGF = { resProperty }
                 });
             }
 

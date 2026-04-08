@@ -11,6 +11,17 @@ namespace HyacineCore.Server.GameServer.Game.Quest;
 public class DailyActiveManager(PlayerInstance player) : BasePlayerManager(player)
 {
     private static readonly Logger Log = Logger.GetByClassName();
+    private static bool ShouldLogDebug()
+    {
+        try
+        {
+            return ConfigManager.Config.ServerOption.LogOption.EnableGamePacketLog;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 
     public DailyActiveData Data => 
         DatabaseHelper.Instance!.GetInstanceOrCreateNew<DailyActiveData>(Player.Uid);
@@ -51,7 +62,8 @@ public class DailyActiveManager(PlayerInstance player) : BasePlayerManager(playe
 
     if (!UtilTools.IsSameDaily(Data.LastRefreshTime, now) || Data.TodayQuests.Count == 0)
     {
-    Log.Info($"[DailyActiveManager] Last update time: {Data.LastRefreshTime}, Current time: {now}");
+    if (ShouldLogDebug())
+        Log.Debug($"[DailyActiveManager] Last update time: {Data.LastRefreshTime}, Current time: {now}");
 
         Data.DailyActivePoint = 0;
         Data.TakenRewardList.Clear();

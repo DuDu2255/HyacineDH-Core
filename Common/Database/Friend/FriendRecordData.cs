@@ -80,14 +80,13 @@ public class FriendDevelopmentInfoPb
             case DevelopmentType.DevelopmentRogueTournDivision: // DevelopmentRogueTournDivision
                 proto.RogueTournDevelopmentInfo = new FriendRogueTournDevelopmentInfo
                 {
-                    ChallengeId = Params.GetValueOrDefault("ChallengeId", 0u)
+                    AreaId = Params.GetValueOrDefault("ChallengeId", 0u)
                 };
                 break;
             case DevelopmentType.DevelopmentChallengePeak: // DevelopmentChallengePeak
                 proto.ChallengePeakDevelopmentInfo = new FriendChallengePeakDevelopmentInfo
                 {
-                    PeakLevelId = Params.GetValueOrDefault("PeakLevelId", 0u),
-                    AreaId = Params.GetValueOrDefault("AreaId", 0u)
+                    PeakId = Params.GetValueOrDefault("PeakLevelId", 0u)
                 };
                 break;
         }
@@ -133,7 +132,7 @@ public class MemoryGroupStatisticsPb
         return new ChallengeStatistics
         {
             RecordId = RecordId,
-            StageTertinggi = new ChallengeStageTertinggi
+            StageTertinggi = new FPDKBGJKPFF
             {
                 LDEKMAADNKK = Stars,
                 Level = Level,
@@ -165,7 +164,7 @@ public class StoryGroupStatisticsPb
         return new ChallengeStoryStatistics
         {
             RecordId = RecordId,
-            StageTertinggi = new ChallengeStoryStageTertinggi
+            StageTertinggi = new PLJJECPCMJD
             {
                 LDEKMAADNKK = Stars,
                 Level = Level,
@@ -199,7 +198,7 @@ public class BossGroupStatisticsPb
         return new ChallengeBossStatistics
         {
             RecordId = RecordId,
-            StageTertinggi = new ChallengeBossStageTertinggi
+            StageTertinggi = new BHFAFMDHKKC
             {
                 LDEKMAADNKK = Stars,
                 Level = Level,

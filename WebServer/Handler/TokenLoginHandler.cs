@@ -19,7 +19,7 @@ public class TokenLoginHandler
         else
         {
             res.message = "OK";
-            res.data = new VerifyData(account!.Uid.ToString(), account.Username + "@egglink.me", token);
+            res.data = new VerifyData(account!.Uid.ToString(), account.Username + "@StarRail.com", token);
             res.data.account.name = account.Username;
             res.data.account.is_email_verify = "1";
         }

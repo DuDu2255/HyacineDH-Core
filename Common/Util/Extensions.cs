@@ -15,9 +15,27 @@ public static class Extensions
             Z = vector.Z
         };
     }
+    public static Position ToPosition(this VectorSnapshot vector)
+    {
+        return new Position
+        {
+            X = vector.X,
+            Y = vector.Y,
+            Z = vector.Z
+        };
+    }
     public static Vector ToVector(this Position position)
     {
         return new Vector
+        {
+            X = position.X,
+            Y = position.Y,
+            Z = position.Z
+        };
+    }
+    public static VectorSnapshot ToSnapshotProto(this Position position)
+    {
+        return new VectorSnapshot
         {
             X = position.X,
             Y = position.Y,

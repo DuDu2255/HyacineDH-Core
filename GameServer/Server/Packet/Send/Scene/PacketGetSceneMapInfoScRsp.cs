@@ -12,17 +12,19 @@ public class PacketGetSceneMapInfoScRsp : BasePacket
     public PacketGetSceneMapInfoScRsp(GetSceneMapInfoCsReq req, PlayerInstance player) : base(
         CmdIds.GetSceneMapInfoScRsp)
     {
-        var rsp = new GetSceneMapInfoScRsp
-        {
-            ContentId = req.ContentId,
-            EntryStoryLineId = req.EntryStoryLineId
-        };
+        var rsp = new GetSceneMapInfoScRsp();
 
-        foreach (var floorId in req.FloorIdList)
+        foreach (var sceneIdentifier in req.SceneIdentifiers)
         {
+            var floorId = sceneIdentifier.FloorId;
             var mazeMap = new SceneMapInfo
             {
-                FloorId = floorId
+                FloorId = floorId,
+                // Keep SceneIdentifier in sync with floor to satisfy newer client map-info parsing.
+                SceneIdentifier = new SceneIdentifier
+                {
+                    FloorId = floorId
+                }
                 //DimensionId = (uint)(player.SceneInstance?.EntityLoader is StoryLineEntityLoader loader ? loader.DimensionId
                 //    : 0)
             };

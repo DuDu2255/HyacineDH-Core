@@ -9,32 +9,21 @@ public class HandlerSendMsgCsReq : Handler
     public override async Task OnHandle(Connection connection, byte[] header, byte[] data)
     {
         var req = SendMsgCsReq.Parser.ParseFrom(data);
-
-        var nestedChatData = req.MessageData?.ChatData;
+        var nestedChatData = req.MessageDatas?.ChatData;
 
         string? text = null;
         if (nestedChatData?.HasMessageText == true)
             text = nestedChatData.MessageText;
-        else if (req.ChatData?.HasMessageText == true)
-            text = req.ChatData.MessageText;
-        else if (!string.IsNullOrWhiteSpace(req.MessageText))
-            text = req.MessageText;
 
         text = text?.Trim('\0').Trim();
 
         var extraId = 0u;
         if (nestedChatData?.HasExtraId == true)
             extraId = nestedChatData.ExtraId;
-        else if (req.ChatData?.HasExtraId == true)
-            extraId = req.ChatData.ExtraId;
-        else
-            extraId = req.ExtraId;
 
         var msgType = MsgType.None;
-        if (req.MessageData != null && req.MessageData.MessageType != MsgType.None)
-            msgType = req.MessageData.MessageType;
-        else if (req.MessageType != MsgType.None)
-            msgType = req.MessageType;
+        if (req.MessageDatas != null && req.MessageDatas.MessageType != MsgType.None)
+            msgType = req.MessageDatas.MessageType;
         else if (!string.IsNullOrWhiteSpace(text))
             msgType = MsgType.CustomText;
         else if (extraId != 0)

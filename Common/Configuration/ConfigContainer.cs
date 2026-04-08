@@ -17,6 +17,7 @@ public class HttpServerConfig
     public string PublicAddress { get; set; } = "127.0.0.1";
     public int Port { get; set; } = 21000;
     public bool UseSSL { get; set; } = false;
+    public bool SendHotfix { get; set; } = true;
     public bool UseFetchRemoteHotfix { get; set; } = false;
 
     public string GetDisplayAddress()
@@ -148,7 +149,6 @@ public class LogOption
     public bool EnableGamePacketLog { get; set; } = false;
 #endif
     public bool LogPacketToConsole { get; set; } = true;
-    public bool DebugShowJsonText { get; set; } = true;
     public bool ShowKcpHandShake { get; set; } = true;
     public bool ShowTimeInLog { get; set; } = true;
     public bool DisableLogDetailPacket { get; set; } = false;

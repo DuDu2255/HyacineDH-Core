@@ -6,13 +6,13 @@ namespace HyacineCore.Server.GameServer.Server.Packet.Send.Chat;
 
 public class PacketGetPrivateChatHistoryScRsp : BasePacket
 {
-    public PacketGetPrivateChatHistoryScRsp(uint contactId, PlayerInstance player) : base(
+    public PacketGetPrivateChatHistoryScRsp(uint targetSide, uint contactId, PlayerInstance player) : base(
         CmdIds.GetPrivateChatHistoryScRsp)
     {
         var proto = new GetPrivateChatHistoryScRsp
         {
             Retcode = 0,
-            TargetSide = 1,
+            TargetSide = targetSide,
             ContactSide = contactId
         };
 

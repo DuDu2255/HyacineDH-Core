@@ -1,9 +1,10 @@
-﻿using HyacineCore.Server.Configuration;
+﻿using Google.Protobuf;
+using HyacineCore.Server.Configuration;
+using HyacineCore.Server.Database.Account;
 using HyacineCore.Server.Proto;
 using HyacineCore.Server.Util;
 using HyacineCore.Server.WebServer.Handler;
 using HyacineCore.Server.WebServer.Objects;
-using Google.Protobuf;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,19 @@ public class DispatchRoutes : ControllerBase
 {
     private static ConfigContainer Config => ConfigManager.Config;
     public static Logger Logger = new("DispatchServer");
+    private static bool DispatchDebugEnabled => Config.ServerOption.LogOption.EnableGamePacketLog;
+
+    private static void Debug(string message)
+    {
+        if (DispatchDebugEnabled)
+            Logger.Debug(message);
+    }
+
+    private static void Debug(string message, Exception e)
+    {
+        if (DispatchDebugEnabled)
+            Logger.Debug(message, e);
+    }
 
     [HttpGet("query_dispatch")]
     public IActionResult QueryDispatch()
@@ -31,31 +45,31 @@ public class DispatchRoutes : ControllerBase
             var ua = req.Headers.UserAgent.ToString();
             var isNewFormat = string.Equals(req.Query["is_new_format"].ToString(), "1", StringComparison.Ordinal);
 
-            Logger.Debug($"query_dispatch begin: {req.Method} {req.Scheme}://{req.Host}{req.PathBase}{req.Path}{req.QueryString} from {remoteIp}:{remotePort} ua=\"{ua}\"");
-            Logger.Debug($"query_dispatch format: is_new_format={isNewFormat}");
+            Debug($"query_dispatch begin: {req.Method} {req.Scheme}://{req.Host}{req.PathBase}{req.Path}{req.QueryString} from {remoteIp}:{remotePort} ua=\"{ua}\"");
+            Debug($"query_dispatch format: is_new_format={isNewFormat}");
 
             foreach (var (key, value) in req.Headers.OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase))
             {
                 if (key.Equals("Authorization", StringComparison.OrdinalIgnoreCase) ||
                     key.Equals("Cookie", StringComparison.OrdinalIgnoreCase))
                 {
-                    Logger.Debug($"query_dispatch header: {key}=<redacted>");
+                    Debug($"query_dispatch header: {key}=<redacted>");
                     continue;
                 }
 
-                Logger.Debug($"query_dispatch header: {key}={value.ToString()}");
+                Debug($"query_dispatch header: {key}={value.ToString()}");
             }
 
             foreach (var (key, value) in req.Query.OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase))
             {
-                Logger.Debug($"query_dispatch query: {key}={value.ToString()}");
+                Debug($"query_dispatch query: {key}={value.ToString()}");
             }
 
-            Logger.Debug($"query_dispatch config: RunDispatch={Config.ServerOption.ServerConfig.RunDispatch}, RunGateway={Config.ServerOption.ServerConfig.RunGateway}, Regions={Config.ServerOption.ServerConfig.Regions.Count}");
+            Debug($"query_dispatch config: RunDispatch={Config.ServerOption.ServerConfig.RunDispatch}, RunGateway={Config.ServerOption.ServerConfig.RunGateway}, Regions={Config.ServerOption.ServerConfig.Regions.Count}");
         }
         catch (Exception e)
         {
-            Logger.Debug("query_dispatch debug prelude failed", e);
+            Debug("query_dispatch debug prelude failed", e);
         }
 
         // Keep the payload minimal (match LC/zig behavior): only `region_list`.
@@ -91,10 +105,10 @@ public class DispatchRoutes : ControllerBase
         var bytes = data.ToByteArray();
         var b64 = Convert.ToBase64String(bytes);
 
-        Logger.Debug($"query_dispatch result: regionCount={data.RegionList.Count}, protoBytes={bytes.Length}, base64Length={b64.Length}");
+        Debug($"query_dispatch result: regionCount={data.RegionList.Count}, protoBytes={bytes.Length}, base64Length={b64.Length}");
         foreach (var r in data.RegionList)
         {
-            Logger.Debug($"query_dispatch region: name={r.Name} env={r.EnvType} display={r.DisplayName} url={r.DispatchUrl}");
+            Debug($"query_dispatch region: name={r.Name} env={r.EnvType} display={r.DisplayName} url={r.DispatchUrl}");
         }
 
         return Content(b64, "text/plain");
@@ -116,7 +130,7 @@ public class DispatchRoutes : ControllerBase
     [HttpPost("/{gameKey}/mdk/shield/api/login")]
     public JsonResult Login([FromBody] LoginReqJson req)
     {
-        Logger.Debug($"shield login: account={req.account} is_crypto={req.is_crypto}");
+        Debug($"shield login: account={req.account} is_crypto={req.is_crypto}");
         return new UsernameLoginHandler().Handle(req.account!, req.password!, req.is_crypto);
     }
 
@@ -124,7 +138,7 @@ public class DispatchRoutes : ControllerBase
     [HttpPost("/{gameKey}/account/ma-passport/api/appLoginByPassword")]
     public JsonResult Login([FromBody] NewLoginReqJson req)
     {
-        Logger.Debug($"appLoginByPassword: account={req.account}");
+        Debug($"appLoginByPassword: account={req.account}");
         return new NewUsernameLoginHandler().Handle(req.account!, req.password!);
     }
 
@@ -132,7 +146,7 @@ public class DispatchRoutes : ControllerBase
     [HttpPost("/{gameKey}/mdk/shield/api/verify")]
     public JsonResult Verify([FromBody] VerifyReqJson req)
     {
-        Logger.Debug($"shield verify: uid={req.uid} token_len={(req.token?.Length ?? 0)}");
+        Debug($"shield verify: uid={req.uid} token_len={(req.token?.Length ?? 0)}");
         return new TokenLoginHandler().Handle(req.uid!, req.token!);
     }
 
@@ -140,8 +154,22 @@ public class DispatchRoutes : ControllerBase
     [HttpPost("/{gameKey}/combo/granter/login/v2/login")]
     public JsonResult LoginV2([FromBody] LoginV2ReqJson req)
     {
-        Logger.Debug($"combo login v2: app_id={req.app_id} channel_id={req.channel_id} data_len={(req.data?.Length ?? 0)}");
+        Debug($"combo login v2: app_id={req.app_id} channel_id={req.channel_id} data_len={(req.data?.Length ?? 0)}");
         return new ComboTokenGranterHandler().Handle(req.app_id, req.channel_id, req.data!, req.device!, req.sign!);
+    }
+
+    [HttpPost("/account/ma-cn-passport/app/loginByPassword")]
+    public ContentResult NewLogin([FromBody] NewLoginReqJson req)
+    {
+        Debug($"ma loginByPassword: account={req.account}");
+        return new NewUsernameLoginHandler2().Handle(req.account!, req.password!);
+    }
+
+    [HttpPost("/account/ma-cn-session/app/verify")]
+    public ContentResult NewVerify([FromBody] VerifySTokenReqJson req)
+    {
+        Debug($"ma verify: mid={req.mid}, token={req.token.token}");
+        return new NewTokenLoginHandler().Handle(req.mid!, req.token.token!);
     }
 
     [HttpGet("/hkrpg_global/combo/granter/api/getConfig")]

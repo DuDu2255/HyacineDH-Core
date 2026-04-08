@@ -7,7 +7,7 @@ public class PacketUpdateTrackMainMissionIdScRsp : BasePacket
 {
     public PacketUpdateTrackMainMissionIdScRsp(int prev, int cur) : base(CmdIds.UpdateTrackMainMissionIdScRsp)
     {
-        var proto = new UpdateTrackMainMissionIdScRsp
+        var proto = new UpdateTrackMainMissionScRsp
         {
             PrevTrackMissionId = (uint)prev,
             TrackMissionId = (uint)cur

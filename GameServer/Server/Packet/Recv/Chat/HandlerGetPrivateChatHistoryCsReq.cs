@@ -11,6 +11,8 @@ public class HandlerGetPrivateChatHistoryCsReq : Handler
     {
         var req = GetPrivateChatHistoryCsReq.Parser.ParseFrom(data);
 
-        await connection.SendPacket(new PacketGetPrivateChatHistoryScRsp(req.ContactSide, connection.Player!));
+        var player = connection.Player!;
+        var targetSide = req.TargetSide != 0 ? req.TargetSide : (uint)player.Uid;
+        await connection.SendPacket(new PacketGetPrivateChatHistoryScRsp(targetSide, req.ContactSide, player));
     }
 }

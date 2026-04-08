@@ -5,7 +5,7 @@ namespace HyacineCore.Server.Util;
 
 public static class GameConstants
 {
-    public const string GAME_VERSION = "4.0.0";
+    public const string GAME_VERSION = "4.2.0";
     public const string AvatarDbVersion = "20250430";
     public const int GameVersionInt = 3200;
     public const int MAX_STAMINA = 300;

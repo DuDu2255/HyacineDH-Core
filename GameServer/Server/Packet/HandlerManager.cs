@@ -13,7 +13,10 @@ public static class HandlerManager
         {
             var attribute = (Opcode?)Attribute.GetCustomAttribute(cls, typeof(Opcode));
 
-            if (attribute != null) handlers.Add(attribute.CmdId, (Handler)Activator.CreateInstance(cls)!);
+            if (attribute == null) continue;
+
+            // Allow aliases that map to the same opcode; last discovered handler wins.
+            handlers[attribute.CmdId] = (Handler)Activator.CreateInstance(cls)!;
         }
     }
 

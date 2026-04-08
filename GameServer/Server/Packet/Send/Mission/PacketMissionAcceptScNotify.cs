@@ -9,9 +9,9 @@ public class PacketMissionAcceptScNotify : BasePacket
     {
     }
 
-    public PacketMissionAcceptScNotify(List<int> missionIds) : base(CmdIds.MissionAcceptScNotify)
+    public PacketMissionAcceptScNotify(List<int> missionIds) : base(CmdIds.MainMissionAcceptNotify)
     {
-        var proto = new MissionAcceptScNotify();
+        var proto = new MainMissionAcceptNotify();
         foreach (var missionId in missionIds) proto.SubMissionIdList.Add((uint)missionId);
 
         SetData(proto);

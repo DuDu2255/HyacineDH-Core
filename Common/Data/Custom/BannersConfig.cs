@@ -137,8 +137,8 @@ public class BannerConfig
         {
             GachaId = (uint)GachaId,
             KIFIEAKAJCK = (uint)GachaType.GetCostItemId(),
-            DetailWebview = "",
-            DropHistoryWebview = ""
+            DetailUrl = "",
+            HistoryUrl = ""
         };
 
         if (GachaType != GachaTypeEnum.Normal)

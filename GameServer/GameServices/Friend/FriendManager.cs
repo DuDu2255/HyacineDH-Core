@@ -352,9 +352,7 @@ public class FriendManager(PlayerInstance player) : BasePlayerManager(player)
         return new GetFriendRecommendLineupScRsp
         {
             Key = challengeId,
-            Retcode = 0,
-            Type = (AJLJOLEJLAC)requestType,
-            IBOBLIKAPNM = false
+            Retcode = 0
         };
     }
     public GetFriendListInfoScRsp ToProto()

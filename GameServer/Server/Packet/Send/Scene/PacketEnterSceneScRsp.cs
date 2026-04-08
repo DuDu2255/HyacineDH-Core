@@ -10,9 +10,12 @@ public class PacketEnterSceneScRsp : BasePacket
     {
         var proto = new EnterSceneScRsp
         {
-            GameStoryLineId = (uint)storyLineId,
             IsCloseMap = tpByMap,
-            IsOverMap = overMapTp
+            IsOverMap = overMapTp,
+            SceneIdentifier = new SceneIdentifier
+            {
+                GameStoryLineId = (uint)storyLineId
+            }
         };
 
         SetData(proto);

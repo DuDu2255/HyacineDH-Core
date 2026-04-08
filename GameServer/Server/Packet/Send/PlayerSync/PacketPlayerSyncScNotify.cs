@@ -116,6 +116,16 @@ public class PacketPlayerSyncScNotify : BasePacket
         SetData(proto);
     }
 
+    public PacketPlayerSyncScNotify(PlayerOutfitInfo playerOutfitData) : base(CmdIds.PlayerSyncScNotify)
+    {
+        var proto = new PlayerSyncScNotify
+        {
+            PlayerOutfitData = playerOutfitData
+        };
+
+        SetData(proto);
+    }
+
     public PacketPlayerSyncScNotify(MessageGroupData? groupData, MessageSectionData? sectionData) : base(
         CmdIds.PlayerSyncScNotify)
     {

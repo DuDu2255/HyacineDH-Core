@@ -47,6 +47,7 @@ public class PlayerData : BaseDatabaseDataHelper
     public Position? Rot { get; set; }
 
     [SugarColumn(IsJson = true)] public PlayerHeadFrameInfo HeadFrame { get; set; } = new();
+    [SugarColumn(IsJson = true)] public List<int> PlayerOutfitList { get; set; } = [];
 
     [SugarColumn(IsNullable = true)] public int PlaneId { get; set; }
 
@@ -80,15 +81,16 @@ public class PlayerData : BaseDatabaseDataHelper
         };
     }
 
-    public LobbyPlayerBasicInfo ToLobbyProto()
+    public PlayerSimpleInfo ToLobbyProto()
     {
-        return new LobbyPlayerBasicInfo
+        return new PlayerSimpleInfo
         {
             Nickname = Name,
             Level = (uint)Level,
-            HeadIconFrameId = (uint)HeadIcon,
+            HeadIcon = (uint)HeadIcon,
             Platform = PlatformType.Pc,
-            Uid = (uint)Uid
+            Uid = (uint)Uid,
+            PlayerOutfitData = ToPlayerOutfitProto()
         };
     }
 
@@ -110,7 +112,8 @@ public class PlayerData : BaseDatabaseDataHelper
             LastActiveTime = LastActiveTime,
             ChatBubbleId = (uint)ChatBubble,
             PersonalCard = (uint)PersonalCard,
-            HeadFrameInfo = HeadFrame.ToProto()
+            HeadFrameInfo = HeadFrame.ToProto(),
+            PlayerOutfitData = ToPlayerOutfitProto()
         };
 
         var pos = 0;
@@ -166,7 +169,8 @@ public class PlayerData : BaseDatabaseDataHelper
             WorldLevel = (uint)WorldLevel,
             RecordInfo = new PlayerRecordInfo(),
             PrivacySettings = PrivacySettings.ToProto(),
-            HeadFrameInfo = HeadFrame.ToProto()
+            HeadFrameInfo = HeadFrame.ToProto(),
+            PlayerOutfitData = ToPlayerOutfitProto()
         };
 
         var avatarInfo = DatabaseHelper.Instance!.GetInstance<AvatarData>(Uid);
@@ -208,6 +212,13 @@ public class PlayerData : BaseDatabaseDataHelper
 
         return info;
     }
+
+    public PlayerOutfitInfo ToPlayerOutfitProto()
+    {
+        var info = new PlayerOutfitInfo();
+        info.PlayerOutfitList.AddRange(PlayerOutfitList.Select(x => (uint)x));
+        return info;
+    }
 }
 
 public class PlayerHeadFrameInfo
@@ -220,7 +231,7 @@ public class PlayerHeadFrameInfo
         return new HeadFrameInfo
         {
             HeadFrameExpireTime = HeadFrameExpireTime,
-            HeadFrameId = HeadFrameId
+            HeadFrameItemId = HeadFrameId
         };
     }
 }
@@ -254,7 +265,7 @@ public class PrivacySettingsPb
             DisplayRecentlyState = DisplayRecentlyState,
             DisplayBattleRecord = DisplayBattleRecord,
             DisplayCollection = DisplayCollection,
-            ExtraSettingsInfo = new PlayerExtraSettingsInfo()
+            ExtraSettingsInfo = new OEEEAEJBENB()
         };
     }
 }

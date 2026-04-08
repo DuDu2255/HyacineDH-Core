@@ -45,9 +45,7 @@ public class ResourceManager
             Logger.Info(I18NManager.Translate("Server.ServerInfo.MissionLoadSkipped"));
         }
 
-        GameData.ActivityConfig =
-            LoadCustomFile<ActivityConfig>("Activity", "ActivityConfig", ConfigManager.Config.Path.GameDataPath) ??
-            new ActivityConfig();
+        GameData.ActivityConfig = LoadActivityConfigFromExcelOutput() ?? new ActivityConfig();
         GameData.BannersConfig =
             LoadCustomFile<BannersConfig>("Banner", "Banners", ConfigManager.Config.Path.GameDataPath) ??
             new BannersConfig();
@@ -426,6 +424,44 @@ public class ResourceManager
         }
 
         return customFile;
+    }
+
+    public static ActivityConfig? LoadActivityConfigFromExcelOutput()
+    {
+        const string fileType = "Activity";
+        var filePath = Path.Combine(ConfigManager.Config.Path.ResourcePath, "ExcelOutput", "ActivityConfig.json");
+
+        Logger.Info(I18NManager.Translate("Server.ServerInfo.LoadingItem", fileType));
+        var file = new FileInfo(filePath);
+        if (!file.Exists)
+        {
+            Logger.Warn(I18NManager.Translate("Server.ServerInfo.ConfigMissing", fileType, filePath, fileType));
+            return null;
+        }
+
+        try
+        {
+            using var reader = file.OpenRead();
+            using StreamReader reader2 = new(reader);
+            var text = reader2.ReadToEnd();
+            var entries = JsonConvert.DeserializeObject<List<ActivityConfigEntry>>(text) ?? [];
+            var config = new ActivityConfig
+            {
+                ActivityConfigEntries = entries
+            };
+
+            config?.Normalize();
+
+            Logger.Info(I18NManager.Translate("Server.ServerInfo.LoadedItems",
+                (config?.ScheduleData.Count ?? 0).ToString(), fileType));
+            return config;
+        }
+        catch (Exception ex)
+        {
+            ResourceCache.IsComplete = false;
+            Logger.Error("Error in reading " + file.Name, ex);
+            return null;
+        }
     }
 
     private static void ApplyChallengePeakOverrideConfig(ChallengePeakOverrideConfig? config)
